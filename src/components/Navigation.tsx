@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logo from "@/assets/preca-logo.jpeg";
+import logo from "@/assets/preca-logo.png";
 
 const navItems = [
   { name: "Inicio", href: "#home" },
