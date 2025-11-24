@@ -1,27 +1,35 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Award, Clock, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Phone, Mail, MessageSquare } from "lucide-react";
+import lilianaImg from "@/assets/liliana.png";
+import erikaImg from "@/assets/erika.png";
+import mariaFernandaImg from "@/assets/maria-fernanda.png";
 
-const stats = [
+const advisors = [
   {
-    icon: Users,
-    value: "500+",
-    label: "Asesores Certificados",
+    name: "LILIANA HERNÁNDEZ HERNÁNDEZ",
+    title: "ASESOR Y REPRESENTANTE DE PRECA",
+    description: "¡La clave para seleccionar a los inquilinos ideales y maximizar tus inversiones!",
+    image: lilianaImg,
+    phone: "9613168341",
+    email: "atencionaclientes@rentasok.com",
   },
   {
-    icon: Award,
-    value: "10+",
-    label: "Años de Experiencia",
+    name: "ERIKA PATRICIA HERNÁNDEZ",
+    title: "ASESOR Y REPRESENTANTE DE PRECA",
+    description: "¡La clave para seleccionar a los inquilinos ideales y maximizar tus inversiones!",
+    image: erikaImg,
+    phone: "9613168341",
+    email: "atencionaclientes@rentasok.com",
   },
   {
-    icon: Clock,
-    value: "24-48hrs",
-    label: "Tiempo de Respuesta",
-  },
-  {
-    icon: TrendingUp,
-    value: "95%",
-    label: "Satisfacción del Cliente",
+    name: "LIC. MARIA FERNANDA HIDALGO LERMA",
+    title: "ASESOR Y REPRESENTANTE DE PRECA",
+    description: "¡La clave para seleccionar a los inquilinos ideales y maximizar tus inversiones!",
+    image: mariaFernandaImg,
+    phone: "2213518202",
+    email: "fer.hidalgo@preca.com.mx",
   },
 ];
 
@@ -39,13 +47,12 @@ export function Advisors() {
             Nuestros Asesores
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Equipo de profesionales certificados en evaluación crediticia e
-            inmobiliaria
+            Equipo de profesionales certificados en evaluación crediticia e inmobiliaria
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {stats.map((stat, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {advisors.map((advisor, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -53,73 +60,49 @@ export function Advisors() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="text-center hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6">
-                  <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <stat.icon className="h-8 w-8 text-primary" />
+              <Card className="overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
+                <CardContent className="p-6 flex flex-col items-center text-center flex-1">
+                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 ring-4 ring-primary/10">
+                    <img 
+                      src={advisor.image} 
+                      alt={advisor.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    {stat.value}
+                  <h3 className="font-heading font-bold text-lg mb-2">
+                    {advisor.name}
+                  </h3>
+                  <p className="text-sm text-primary font-medium mb-3">
+                    {advisor.title}
+                  </p>
+                  <p className="text-muted-foreground text-sm mb-6 flex-1">
+                    {advisor.description}
+                  </p>
+                  <div className="w-full space-y-2">
+                    <p className="text-xs font-semibold text-muted-foreground mb-2">Contácteme</p>
+                    <div className="flex gap-2 justify-center">
+                      <Button size="sm" variant="outline" asChild className="flex-1">
+                        <a href={`tel:${advisor.phone}`}>
+                          <Phone className="h-4 w-4" />
+                        </a>
+                      </Button>
+                      <Button size="sm" variant="outline" asChild className="flex-1">
+                        <a href={`mailto:${advisor.email}`}>
+                          <Mail className="h-4 w-4" />
+                        </a>
+                      </Button>
+                      <Button size="sm" variant="outline" asChild className="flex-1">
+                        <a href={`sms:${advisor.phone}`}>
+                          <MessageSquare className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
                   </div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-card rounded-2xl p-8 md:p-12 shadow-md"
-        >
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-heading font-bold mb-4">
-                Profesionales Comprometidos
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Nuestro equipo está formado por especialistas en evaluación
-                crediticia, derecho inmobiliario y atención al cliente. Cada asesor
-                recibe capacitación continua para ofrecer el mejor servicio.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-2">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <span>Certificaciones en evaluación crediticia</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <span>Conocimiento del mercado inmobiliario mexicano</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <div className="h-2 w-2 rounded-full bg-primary" />
-                  </div>
-                  <span>Atención personalizada y confidencial</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-primary/5 rounded-xl p-8 text-center">
-              <div className="text-4xl font-bold text-primary mb-2">¿Quieres unirte?</div>
-              <p className="text-muted-foreground mb-4">
-                Estamos buscando profesionales apasionados por el sector inmobiliario
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium"
-              >
-                Únete al Equipo
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
