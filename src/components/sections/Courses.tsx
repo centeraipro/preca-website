@@ -87,20 +87,20 @@ export function Courses() {
         </div>
 
         <Dialog open={!!selectedPdf} onOpenChange={() => setSelectedPdf(null)}>
-          <DialogContent className="max-w-4xl h-[80vh]">
-            <DialogHeader>
-              <DialogTitle>Vista previa del curso</DialogTitle>
+          <DialogContent className="max-w-6xl h-[90vh] flex flex-col p-0">
+            <DialogHeader className="px-6 pt-6 pb-4 border-b">
+              <DialogTitle className="text-2xl font-heading">Vista previa del curso</DialogTitle>
             </DialogHeader>
-            <div className="flex-1 h-full">
+            <div className="flex-1 overflow-hidden px-6 pb-4">
               {selectedPdf && (
                 <iframe
                   src={selectedPdf}
-                  className="w-full h-full rounded-md"
+                  className="w-full h-full rounded-lg border"
                   title="PDF Preview"
                 />
               )}
             </div>
-            <div className="flex justify-end gap-2 pt-4">
+            <div className="flex justify-end gap-3 px-6 pb-6 pt-4 border-t bg-muted/30">
               <Button variant="outline" onClick={() => setSelectedPdf(null)}>
                 Cerrar
               </Button>
