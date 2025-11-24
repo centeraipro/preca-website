@@ -52,10 +52,7 @@ const item = {
 
 export function Services() {
   return (
-    <section id="services" className="py-20 md:py-32 relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-gradient-to-b from-muted/20 to-transparent -z-10" />
-      
+    <section id="services" className="py-20 md:py-32 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,19 +60,10 @@ export function Services() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <motion.span 
-            className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            Soluciones Personalizadas
-          </motion.span>
-          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-            Nuestros <span className="text-gradient">Servicios</span>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
+            Nuestros Servicios
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Soluciones adaptadas a cada necesidad de precalificación
           </p>
         </motion.div>
@@ -85,46 +73,27 @@ export function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {services.map((service, index) => (
-            <motion.div 
-              key={index} 
-              variants={item}
-              whileHover={{ y: -10 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <Card className="h-full relative overflow-hidden group hover:shadow-xl transition-all duration-500 border-2 hover:border-primary/50">
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <CardHeader className="relative">
-                  <motion.div 
-                    className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center mb-6 shadow-lg group-hover:shadow-glow-primary transition-all duration-300"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <service.icon className="h-8 w-8 text-primary-foreground" />
-                  </motion.div>
-                  <CardTitle className="text-2xl mb-3 group-hover:text-primary transition-colors">{service.title}</CardTitle>
-                  <CardDescription className="text-base leading-relaxed">
+            <motion.div key={index} variants={item}>
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                    <service.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                  <CardDescription className="text-base">
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="relative">
-                  <ul className="space-y-3">
+                <CardContent>
+                  <ul className="space-y-2">
                     {service.features.map((feature, idx) => (
-                      <motion.li 
-                        key={idx} 
-                        className="flex items-center gap-3 text-sm text-muted-foreground"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 }}
-                      >
-                        <div className="h-2 w-2 rounded-full bg-gradient-to-r from-primary to-accent flex-shrink-0" />
+                      <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
                         {feature}
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
                 </CardContent>
