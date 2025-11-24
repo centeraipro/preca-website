@@ -40,7 +40,7 @@ export function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt="Preca Logo" className="h-10 w-auto" />
+            <img src={logo} alt="Preca Logo" className="h-16 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
