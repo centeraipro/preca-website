@@ -36,10 +36,24 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
-            <Button size="lg" className="text-lg">
-              Solicitar Precalificación
+            <Button size="lg" className="text-lg" asChild>
+              <a href="https://wa.me/529613168341" target="_blank" rel="noopener noreferrer">
+                Solicitar Precalificación
+              </a>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg"
+              onClick={() => {
+                const servicesSection = document.querySelector('#services');
+                if (servicesSection) {
+                  const offset = 80;
+                  const targetPosition = servicesSection.getBoundingClientRect().top + window.scrollY - offset;
+                  window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+              }}
+            >
               Conocer Servicios
             </Button>
           </motion.div>
