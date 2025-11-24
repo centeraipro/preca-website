@@ -59,25 +59,9 @@ export function Contact() {
           <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
             Contáctanos
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             ¿Tienes preguntas? Nuestro equipo está listo para ayudarte
           </p>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <Button 
-              size="lg" 
-              className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-shadow"
-              onClick={() => window.open('https://wa.me/529613168341', '_blank')}
-            >
-              <MessageCircle className="mr-2 h-6 w-6" />
-              Contáctanos por WhatsApp
-            </Button>
-          </motion.div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
