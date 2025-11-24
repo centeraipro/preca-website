@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Download } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useState } from "react";
 
 const courses = [
   {
@@ -34,8 +32,6 @@ const courses = [
 ];
 
 export function Courses() {
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-
   return (
     <section id="courses" className="py-20 md:py-32 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -73,46 +69,17 @@ export function Courses() {
                   <CardDescription className="text-sm">{course.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="mt-auto">
-                  <Button 
-                    className="w-full" 
-                    onClick={() => setSelectedPdf(course.pdfUrl)}
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    Descargar PDF
+                  <Button className="w-full" asChild>
+                    <a href={course.pdfUrl} download>
+                      <Download className="mr-2 h-4 w-4" />
+                      Descargar PDF
+                    </a>
                   </Button>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
-
-        <Dialog open={!!selectedPdf} onOpenChange={() => setSelectedPdf(null)}>
-          <DialogContent className="max-w-6xl h-[90vh] flex flex-col p-0">
-            <DialogHeader className="px-6 pt-6 pb-4 border-b">
-              <DialogTitle className="text-2xl font-heading">Vista previa del curso</DialogTitle>
-            </DialogHeader>
-            <div className="flex-1 overflow-hidden px-6 pb-4">
-              {selectedPdf && (
-                <iframe
-                  src={selectedPdf}
-                  className="w-full h-full rounded-lg border"
-                  title="PDF Preview"
-                />
-              )}
-            </div>
-            <div className="flex justify-end gap-3 px-6 pb-6 pt-4 border-t bg-muted/30">
-              <Button variant="outline" onClick={() => setSelectedPdf(null)}>
-                Cerrar
-              </Button>
-              <Button asChild>
-                <a href={selectedPdf || ""} download>
-                  <Download className="mr-2 h-4 w-4" />
-                  Descargar
-                </a>
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </section>
   );
