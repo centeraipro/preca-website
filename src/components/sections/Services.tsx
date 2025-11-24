@@ -34,21 +34,7 @@ const services = [
     title: "PRECA PRO",
     description: "Análisis completo con evaluación crediticia y verificación exhaustiva.",
     features: ["Buró de crédito", "Referencias personales", "Verificación laboral completa"],
-    fullDescription: "En la PRECA BÁSICA solo evaluábamos dos aspectos del prospecto, y ahora hemos creado un 'Módulo de evaluación de prospectos a inquilinos' el cual toma en cuenta 7 de las características más importantes del evaluado, incluido el historial crediticio, capacidad de pago, historial jurídico, etc. El resultado que entregamos es un rankeo, el grado de riesgo, la recomendación de rentarle o no, y con qué requisitos.",
-    aspects: [
-      "Historial crediticio (buró de crédito)",
-      "Capacidad de pago de acuerdo a sus ingresos comprobables y monto de renta",
-      "Historial jurídico",
-      "Procedencia y movilidad",
-      "Antigüedad en el sector donde se desarrolla",
-      "Economía familiar",
-      "Edad"
-    ],
-    deliverables: [
-      "PDF de verificación de identidad con biométrico",
-      "PDF con buró de crédito del prospecto a inquilino",
-      "PDF con reporte del resultado de la evaluación del prospecto, con el rankeo, tipo de riesgo, probabilidad de pago, factor de capacidad de pago de acuerdo al monto de renta, antecedentes jurídicos, recomendación de rentarle o no y con qué requisitos"
-    ],
+    fullDescription: "En la PRECA BÁSICA solo evaluábamos dos aspectos del prospecto, y ahora hemos creado un 'Módulo de evaluación de prospectos a inquilinos' el cual toma en cuenta 7 de las características más importantes del evaluado: historial crediticio (buró de crédito), capacidad de pago de acuerdo a sus ingresos comprobables y monto de renta, historial jurídico, procedencia y movilidad, antigüedad en el sector donde se desarrolla, economía familiar, y edad. El resultado que entregamos incluye un rankeo, el grado de riesgo, y la recomendación de rentarle o no y con qué requisitos. Se entregan tres documentos: PDF de verificación de identidad con biométrico, PDF con buró de crédito del prospecto a inquilino, y PDF con reporte del resultado de la evaluación del prospecto, con el rankeo, tipo de riesgo, probabilidad de pago, factor de capacidad de pago de acuerdo al monto de renta, antecedentes jurídicos, y recomendaciones.",
     pricing: [
       "Persona física: $850.00",
       "Persona moral: $1,000.00"
@@ -159,11 +145,11 @@ export function Services() {
                       </DialogHeader>
                       
                       <div className="space-y-6 py-4">
-                        {service.aspects && (
+                        {'aspects' in service && Array.isArray(service.aspects) && (
                           <div>
                             <h3 className="font-semibold text-lg mb-3">Aspectos a evaluar</h3>
                             <ul className="space-y-2">
-                              {service.aspects.map((aspect, idx) => (
+                              {service.aspects.map((aspect: string, idx: number) => (
                                 <li key={idx} className="flex items-start gap-2 text-sm">
                                   <span className="text-primary font-semibold">{idx + 1}.</span>
                                   <span>{aspect}</span>
@@ -173,11 +159,11 @@ export function Services() {
                           </div>
                         )}
                         
-                        {service.deliverables && (
+                        {'deliverables' in service && Array.isArray(service.deliverables) && (
                           <div>
                             <h3 className="font-semibold text-lg mb-3">Entregables</h3>
                             <ul className="space-y-2">
-                              {service.deliverables.map((deliverable, idx) => (
+                              {service.deliverables.map((deliverable: string, idx: number) => (
                                 <li key={idx} className="flex items-start gap-2 text-sm">
                                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
                                   <span>{deliverable}</span>
