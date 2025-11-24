@@ -35,65 +35,98 @@ const advisors = [
 
 export function Advisors() {
   return (
-    <section id="advisors" className="py-20 md:py-32">
+    <section id="advisors" className="py-20 md:py-32 relative">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Nuestros Asesores
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Equipo de profesionales certificados en evaluación crediticia e inmobiliaria
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.15, duration: 0.5 }}
+              whileHover={{ y: -8 }}
+              className="h-full"
             >
-              <Card className="overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
-                <CardContent className="p-6 flex flex-col items-center text-center flex-1">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 ring-4 ring-primary/10">
-                    <img 
-                      src={advisor.image} 
-                      alt={advisor.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="font-heading font-bold text-lg mb-2">
+              <Card className="overflow-hidden h-full flex flex-col border-2 hover:border-primary/20 transition-all duration-300 shadow-lg hover:shadow-2xl bg-card/50 backdrop-blur-sm">
+                <CardContent className="p-8 flex flex-col items-center text-center flex-1">
+                  <motion.div 
+                    className="relative w-40 h-40 mb-6"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 blur-xl"></div>
+                    <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-primary/20 shadow-xl">
+                      <img 
+                        src={advisor.image} 
+                        alt={advisor.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </motion.div>
+                  
+                  <h3 className="font-heading font-bold text-xl mb-3 leading-tight">
                     {advisor.name}
                   </h3>
-                  <p className="text-sm text-primary font-medium mb-3">
-                    {advisor.title}
-                  </p>
-                  <p className="text-muted-foreground text-sm mb-6 flex-1">
+                  
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 mb-4">
+                    <p className="text-xs text-primary font-semibold uppercase tracking-wide">
+                      {advisor.title}
+                    </p>
+                  </div>
+                  
+                  <p className="text-muted-foreground text-base mb-8 flex-1 leading-relaxed">
                     {advisor.description}
                   </p>
-                  <div className="w-full space-y-2">
-                    <p className="text-xs font-semibold text-muted-foreground mb-2">Contácteme</p>
-                    <div className="flex gap-2 justify-center">
-                      <Button size="sm" variant="outline" asChild className="flex-1">
-                        <a href={`tel:${advisor.phone}`}>
-                          <Phone className="h-4 w-4" />
+                  
+                  <div className="w-full space-y-3">
+                    <p className="text-sm font-semibold text-foreground/80 mb-3">Contácteme</p>
+                    <div className="grid grid-cols-3 gap-3">
+                      <Button 
+                        size="lg" 
+                        variant="outline" 
+                        asChild 
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                      >
+                        <a href={`tel:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
+                          <Phone className="h-5 w-5" />
+                          <span className="text-[10px] font-medium">Llamar</span>
                         </a>
                       </Button>
-                      <Button size="sm" variant="outline" asChild className="flex-1">
-                        <a href={`mailto:${advisor.email}`}>
-                          <Mail className="h-4 w-4" />
+                      <Button 
+                        size="lg" 
+                        variant="outline" 
+                        asChild 
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                      >
+                        <a href={`mailto:${advisor.email}`} className="flex flex-col gap-1 h-auto py-3">
+                          <Mail className="h-5 w-5" />
+                          <span className="text-[10px] font-medium">Email</span>
                         </a>
                       </Button>
-                      <Button size="sm" variant="outline" asChild className="flex-1">
-                        <a href={`sms:${advisor.phone}`}>
-                          <MessageSquare className="h-4 w-4" />
+                      <Button 
+                        size="lg" 
+                        variant="outline" 
+                        asChild 
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                      >
+                        <a href={`sms:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
+                          <MessageSquare className="h-5 w-5" />
+                          <span className="text-[10px] font-medium">SMS</span>
                         </a>
                       </Button>
                     </div>
