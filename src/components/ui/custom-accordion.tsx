@@ -28,7 +28,7 @@ const CustomAccordionTrigger = React.forwardRef<
 			ref={ref}
 			className={cn(
 				'group flex flex-1 items-center justify-between gap-4 rounded-2xl p-4 text-left',
-				'bg-card dark:bg-zinc-800 dark:text-white transition-all hover:bg-accent/50 hover:shadow-md',
+				'bg-card dark:bg-zinc-800 dark:text-white transition-all hover:shadow-md',
 				'dark:hover:bg-zinc-700/60 focus-visible:outline-none focus-visible:ring-2',
 				'dark:data-[state=open]:bg-zinc-700 data-[state=open]:shadow-md',
 				className
