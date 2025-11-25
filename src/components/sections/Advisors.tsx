@@ -60,8 +60,8 @@ export function Advisors() {
                 className={cn(
                   "[grid-area:stack] relative flex h-auto min-h-[280px] w-full max-w-[26rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-card/70 backdrop-blur-sm px-6 py-6 shadow-xl hover:shadow-2xl transition-all duration-700 before:absolute before:w-[100%] before:rounded-xl before:h-[100%] before:content-[''] before:bg-blend-overlay before:left-0 before:top-0",
                   index === 0 && "border-border hover:border-primary/40 hover:-translate-y-12 before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 z-30",
-                  index === 1 && "translate-x-20 translate-y-12 border-border hover:border-primary/40 hover:-translate-y-2 before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 z-20",
-                  index === 2 && "translate-x-40 translate-y-24 border-border hover:border-primary/40 hover:translate-y-14 z-10"
+                  index === 1 && "translate-y-12 border-border hover:border-primary/40 hover:-translate-y-2 before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 z-20",
+                  index === 2 && "translate-y-24 border-border hover:border-primary/40 hover:translate-y-14 z-10"
                 )}
               >
                 <div className="flex items-start gap-3 mb-6">
