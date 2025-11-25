@@ -107,14 +107,10 @@ export function Courses() {
               {courses.map((course, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 40 }}
-                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ 
-                      delay: index * 0.15,
-                      duration: 0.7,
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
                     className="h-full p-1"
                   >
                     <Card className="h-full group relative overflow-hidden border-2 hover:border-primary/30 transition-all duration-500 flex flex-col bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:scale-[1.02]">

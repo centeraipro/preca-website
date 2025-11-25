@@ -35,60 +35,42 @@ const advisors = [
 
 export function Advisors() {
   return (
-    <section id="advisors" className="py-20 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/5"></div>
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="advisors" className="py-20 md:py-32 relative">
+      <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <motion.h2 
-            initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
-            whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
-          >
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Nuestros Asesores
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"
-          >
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Equipo de profesionales certificados en evaluación crediticia e inmobiliaria
-          </motion.p>
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 60, scale: 0.9, rotateX: 15 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                delay: index * 0.2, 
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              whileHover={{ y: -12, scale: 1.02 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.15, duration: 0.5 }}
+              whileHover={{ y: -8 }}
               className="h-full"
             >
-              <Card className="group overflow-hidden h-full flex flex-col border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-2xl bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:-translate-y-2">
+              <Card className="overflow-hidden h-full flex flex-col border-2 hover:border-primary/20 transition-all duration-300 shadow-lg hover:shadow-2xl bg-card/50 backdrop-blur-sm">
                 <CardContent className="p-8 flex flex-col items-center text-center flex-1">
                   <motion.div 
                     className="relative w-40 h-40 mb-6"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
-                    <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-primary/30 shadow-xl">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 blur-xl"></div>
+                    <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-primary/20 shadow-xl">
                       <img 
                         src={advisor.image} 
                         alt={advisor.name}
@@ -97,11 +79,11 @@ export function Advisors() {
                     </div>
                   </motion.div>
                   
-                  <h3 className="font-heading font-bold text-xl mb-3 leading-tight group-hover:text-primary transition-colors duration-300">
+                  <h3 className="font-heading font-bold text-xl mb-3 leading-tight">
                     {advisor.name}
                   </h3>
                   
-                  <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 mb-4">
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 mb-4">
                     <p className="text-xs text-primary font-semibold uppercase tracking-wide">
                       {advisor.title}
                     </p>
@@ -116,31 +98,34 @@ export function Advisors() {
                     <div className="grid grid-cols-3 gap-3">
                       <Button 
                         size="lg" 
+                        variant="outline" 
                         asChild 
-                        className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn border border-primary/20"
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
                       >
                         <a href={`tel:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
-                          <Phone className="h-5 w-5 group-hover/btn:scale-110 transition-transform" />
+                          <Phone className="h-5 w-5" />
                           <span className="text-[10px] font-medium">Llamar</span>
                         </a>
                       </Button>
                       <Button 
                         size="lg" 
+                        variant="outline" 
                         asChild 
-                        className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn border border-primary/20"
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
                       >
                         <a href={`mailto:${advisor.email}`} className="flex flex-col gap-1 h-auto py-3">
-                          <Mail className="h-5 w-5 group-hover/btn:scale-110 transition-transform" />
+                          <Mail className="h-5 w-5" />
                           <span className="text-[10px] font-medium">Email</span>
                         </a>
                       </Button>
                       <Button 
                         size="lg" 
+                        variant="outline" 
                         asChild 
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 group/btn shadow-md"
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
                       >
                         <a href={`sms:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
-                          <MessageSquare className="h-5 w-5 group-hover/btn:scale-110 transition-transform" />
+                          <MessageSquare className="h-5 w-5" />
                           <span className="text-[10px] font-medium">SMS</span>
                         </a>
                       </Button>

@@ -101,37 +101,24 @@ export function Services() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, rotateX: -20 }}
-            whileInView={{ scale: 1, opacity: 1, rotateX: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <Shield className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Soluciones Profesionales</span>
           </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
-          >
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Nuestros Servicios
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Soluciones adaptadas a cada necesidad de precalificación
-          </motion.p>
+          </p>
         </motion.div>
 
         <div className="relative">
@@ -194,10 +181,11 @@ export function Services() {
                         <Dialog open={openDialog === index} onOpenChange={(open) => setOpenDialog(open ? index : null)}>
                           <DialogTrigger asChild>
                             <Button 
-                              className="w-full group/btn relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
+                              variant="outline" 
+                              className="w-full group/btn relative overflow-hidden border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                             >
                               <span className="relative z-10">Más información</span>
-                              <div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
+                              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                             </Button>
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
