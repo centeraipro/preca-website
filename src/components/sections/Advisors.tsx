@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MessageSquare } from "lucide-react";
+import { Phone, Mail, MessageSquare, User } from "lucide-react";
+import DisplayCards from "@/components/ui/display-cards";
 
 const advisors = [
   {
@@ -39,7 +39,7 @@ export function Advisors() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 lg:gap-24">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
@@ -47,55 +47,71 @@ export function Advisors() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15, duration: 0.5 }}
-              whileHover={{ y: -8 }}
-              className="h-full"
+              className="flex flex-col items-center gap-8"
             >
-              <Card className="overflow-hidden h-full flex flex-col border-2 hover:border-primary/20 transition-all duration-300 shadow-lg hover:shadow-2xl bg-card/50 backdrop-blur-sm">
-                <CardContent className="p-8 flex flex-col items-center text-center">
-                  <h3 className="font-heading font-bold text-xl mb-8 leading-tight">
-                    {advisor.name}
-                  </h3>
-                  
-                  <div className="w-full space-y-3">
-                    <p className="text-sm font-semibold text-foreground/80 mb-3">Contácteme</p>
-                    <div className="grid grid-cols-3 gap-3">
-                      <Button 
-                        size="lg" 
-                        variant="outline" 
-                        asChild 
-                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
-                      >
-                        <a href={`tel:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
-                          <Phone className="h-5 w-5" />
-                          <span className="text-[10px] font-medium">Llamar</span>
-                        </a>
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline" 
-                        asChild 
-                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
-                      >
-                        <a href={`mailto:${advisor.email}`} className="flex flex-col gap-1 h-auto py-3">
-                          <Mail className="h-5 w-5" />
-                          <span className="text-[10px] font-medium">Email</span>
-                        </a>
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline" 
-                        asChild 
-                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
-                      >
-                        <a href={`sms:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
-                          <MessageSquare className="h-5 w-5" />
-                          <span className="text-[10px] font-medium">SMS</span>
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <DisplayCards
+                cards={[
+                  {
+                    icon: <User className="size-4 text-primary" />,
+                    title: advisor.name,
+                    iconClassName: "bg-primary/20",
+                    titleClassName: "text-foreground",
+                    className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                  },
+                  {
+                    icon: <Phone className="size-4 text-primary" />,
+                    title: advisor.phone,
+                    description: "Teléfono",
+                    iconClassName: "bg-primary/20",
+                    titleClassName: "text-foreground",
+                    className: "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+                  },
+                  {
+                    icon: <Mail className="size-4 text-primary" />,
+                    title: advisor.email,
+                    description: "Correo electrónico",
+                    iconClassName: "bg-primary/20",
+                    titleClassName: "text-foreground text-sm",
+                    className: "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
+                  },
+                ]}
+              />
+              
+              <div className="flex gap-3 mt-4">
+                <Button 
+                  size="sm" 
+                  variant="default" 
+                  asChild 
+                  className="transition-all duration-300"
+                >
+                  <a href={`tel:${advisor.phone}`} className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span className="text-xs font-medium">Llamar</span>
+                  </a>
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  asChild 
+                  className="hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                >
+                  <a href={`mailto:${advisor.email}`} className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span className="text-xs font-medium">Email</span>
+                  </a>
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  asChild 
+                  className="hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                >
+                  <a href={`sms:${advisor.phone}`} className="flex items-center gap-2">
+                    <MessageSquare className="h-4 w-4" />
+                    <span className="text-xs font-medium">SMS</span>
+                  </a>
+                </Button>
+              </div>
             </motion.div>
           ))}
         </div>
