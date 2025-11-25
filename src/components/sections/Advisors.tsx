@@ -39,7 +39,7 @@ export function Advisors() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 lg:gap-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
@@ -47,37 +47,29 @@ export function Advisors() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15, duration: 0.5 }}
-              className="flex flex-col items-center gap-8"
+              className="flex flex-col items-center gap-6"
             >
-              <DisplayCards
-                cards={[
-                  {
-                    icon: <User className="size-4 text-primary" />,
-                    title: advisor.name,
-                    iconClassName: "bg-primary/20",
-                    titleClassName: "text-foreground",
-                    className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
-                  },
-                  {
-                    icon: <Phone className="size-4 text-primary" />,
-                    title: advisor.phone,
-                    description: "Teléfono",
-                    iconClassName: "bg-primary/20",
-                    titleClassName: "text-foreground",
-                    className: "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
-                  },
-                  {
-                    icon: <Mail className="size-4 text-primary" />,
-                    title: advisor.email,
-                    description: "Correo electrónico",
-                    iconClassName: "bg-primary/20",
-                    titleClassName: "text-foreground text-sm",
-                    className: "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
-                  },
-                ]}
-              />
+              <div className="relative flex h-auto min-h-[200px] w-full max-w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-border bg-card/70 backdrop-blur-sm px-6 py-5 transition-all duration-700 hover:border-primary/40 hover:bg-card hover:-translate-y-2 shadow-lg hover:shadow-xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="relative inline-block rounded-full bg-primary/20 p-2">
+                    <User className="size-5 text-primary" />
+                  </span>
+                  <h3 className="text-lg font-bold font-heading text-foreground">{advisor.name}</h3>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Phone className="size-4 text-primary" />
+                    <p className="text-sm text-foreground">{advisor.phone}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="size-4 text-primary" />
+                    <p className="text-xs text-muted-foreground break-all">{advisor.email}</p>
+                  </div>
+                </div>
+              </div>
               
-              <div className="flex gap-3 mt-4">
+              <div className="flex gap-3">
                 <Button 
                   size="sm" 
                   variant="default" 
