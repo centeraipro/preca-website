@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Phone, Mail, MessageSquare, Users } from "lucide-react";
+import { Phone, Mail, Users } from "lucide-react";
 
 const advisors = [
   {
@@ -51,7 +49,7 @@ export function Advisors() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
@@ -59,52 +57,53 @@ export function Advisors() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="h-full"
+              className="group relative"
             >
-              <Card className="h-full flex flex-col border border-border/50 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-xl bg-card">
-                <CardContent className="p-6 flex flex-col gap-6">
-                  {/* Name */}
-                  <h3 className="font-heading font-bold text-lg text-center">
-                    {advisor.name}
-                  </h3>
+              {/* Card with gradient border effect */}
+              <div className="relative p-[2px] rounded-2xl bg-gradient-to-br from-primary via-primary/50 to-primary/20 hover:from-primary hover:via-primary/70 hover:to-primary/40 transition-all duration-300">
+                <div className="relative bg-card rounded-2xl p-8 h-full flex flex-col gap-6">
+                  {/* Decorative corner accent */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-[3rem] rounded-tr-2xl"></div>
                   
-                  {/* Contact Buttons */}
-                  <div className="grid grid-cols-1 gap-3">
-                    <Button 
-                      size="lg" 
-                      asChild 
-                      className="w-full justify-start gap-3 h-12"
-                    >
-                      <a href={`tel:${advisor.phone}`}>
-                        <Phone className="h-5 w-5" />
-                        <span>Llamar ahora</span>
-                      </a>
-                    </Button>
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      asChild 
-                      className="w-full justify-start gap-3 h-12"
-                    >
-                      <a href={`mailto:${advisor.email}`}>
-                        <Mail className="h-5 w-5" />
-                        <span>Enviar email</span>
-                      </a>
-                    </Button>
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      asChild 
-                      className="w-full justify-start gap-3 h-12"
-                    >
-                      <a href={`sms:${advisor.phone}`}>
-                        <MessageSquare className="h-5 w-5" />
-                        <span>Enviar SMS</span>
-                      </a>
-                    </Button>
+                  {/* Name */}
+                  <div className="relative z-10">
+                    <h3 className="font-heading font-bold text-xl text-foreground leading-tight">
+                      {advisor.name}
+                    </h3>
                   </div>
-                </CardContent>
-              </Card>
+                  
+                  {/* Contact Information */}
+                  <div className="flex flex-col gap-4 mt-auto">
+                    {/* Phone */}
+                    <a
+                      href={`tel:${advisor.phone}`}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors duration-200 group/item"
+                    >
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-200">
+                        <Phone className="h-5 w-5 text-primary group-hover/item:text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs text-muted-foreground">Teléfono</p>
+                        <p className="text-sm font-medium text-foreground">{advisor.phone}</p>
+                      </div>
+                    </a>
+                    
+                    {/* Email */}
+                    <a
+                      href={`mailto:${advisor.email}`}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors duration-200 group/item"
+                    >
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors duration-200">
+                        <Mail className="h-5 w-5 text-primary group-hover/item:text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs text-muted-foreground">Email</p>
+                        <p className="text-sm font-medium text-foreground break-all">{advisor.email}</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
