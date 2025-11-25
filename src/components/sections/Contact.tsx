@@ -48,15 +48,16 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-gradient-to-b from-background to-muted/30">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="py-20 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Contáctanos
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -75,15 +76,18 @@ export function Contact() {
                 viewport={{ once: true }}
                 transition={{ delay: item.delay }}
               >
-                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <Card className="group h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-primary/10 bg-gradient-to-br from-card to-card/50 backdrop-blur-sm">
                   <CardContent className="pt-8 pb-8 text-center">
                     <div className="flex justify-center mb-6">
-                      <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Icon className="h-10 w-10 text-primary" />
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/50 rounded-full blur-md opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
+                        <div className="h-20 w-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border-2 border-primary/20 relative z-10 group-hover:scale-110 transition-transform duration-300">
+                          <Icon className="h-10 w-10 text-primary group-hover:scale-110 transition-transform duration-300" />
+                        </div>
                       </div>
                     </div>
                     
-                    <h3 className="text-xl font-bold text-primary mb-3">
+                    <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-primary/80 transition-colors">
                       {item.title}
                     </h3>
                     
