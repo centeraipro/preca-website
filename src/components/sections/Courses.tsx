@@ -8,9 +8,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const courses = [
   {
@@ -44,6 +45,22 @@ export function Courses() {
   const autoplayPlugin = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+
+    setCurrent(carouselApi.selectedScrollSnap());
+
+    carouselApi.on("select", () => {
+      setCurrent(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
+
+  const scrollToSlide = (index: number) => {
+    carouselApi?.scrollTo(index);
+  };
 
   return (
     <section id="courses" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-muted/60 relative overflow-hidden">
@@ -81,6 +98,7 @@ export function Courses() {
               loop: true,
             }}
             plugins={[autoplayPlugin.current]}
+            setApi={setCarouselApi}
             className="w-full max-w-6xl mx-auto"
             onMouseEnter={() => autoplayPlugin.current.stop()}
             onMouseLeave={() => autoplayPlugin.current.play()}
@@ -145,7 +163,7 @@ export function Courses() {
             <CarouselNext className="right-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
           </Carousel>
           
-          {/* Progress indicator */}
+          {/* Interactive progress indicator */}
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -153,10 +171,16 @@ export function Courses() {
             className="flex justify-center gap-2 mt-8"
           >
             {courses.map((_, index) => (
-              <div
+              <button
                 key={index}
-                className="h-1.5 w-12 rounded-full bg-primary/20"
-              ></div>
+                onClick={() => scrollToSlide(index)}
+                className={`h-1.5 w-12 rounded-full transition-all duration-500 hover:scale-110 ${
+                  current === index
+                    ? "bg-primary w-16 shadow-lg shadow-primary/50"
+                    : "bg-primary/20 hover:bg-primary/40"
+                }`}
+                aria-label={`Ir al curso ${index + 1}`}
+              ></button>
             ))}
           </motion.div>
         </div>
