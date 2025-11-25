@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
+import { BookOpen } from "lucide-react";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  CustomAccordion,
+  CustomAccordionItem,
+  CustomAccordionTrigger,
+  CustomAccordionContent,
+} from "@/components/ui/custom-accordion";
 
 const faqs = [
   {
@@ -41,15 +42,27 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="py-20 md:py-32">
-      <div className="container mx-auto px-4">
+    <section id="faq" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
+          >
+            <BookOpen className="h-5 w-5 text-primary" />
+            <span className="text-sm font-medium text-primary">Información Esencial</span>
+          </motion.div>
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Preguntas Frecuentes
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -63,22 +76,22 @@ export function FAQ() {
           viewport={{ once: true }}
           className="max-w-3xl mx-auto"
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <CustomAccordion
+            type="single"
+            collapsible
+            defaultValue="item-0"
+            className="space-y-6"
+          >
             {faqs.map((faq, index) => (
-              <AccordionItem
+              <CustomAccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-card rounded-lg px-6 border shadow-sm"
               >
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+                <CustomAccordionTrigger>{faq.question}</CustomAccordionTrigger>
+                <CustomAccordionContent>{faq.answer}</CustomAccordionContent>
+              </CustomAccordionItem>
             ))}
-          </Accordion>
+          </CustomAccordion>
         </motion.div>
       </div>
     </section>
