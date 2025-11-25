@@ -51,68 +51,57 @@ export function Advisors() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-              whileHover={{ y: -8 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
               className="h-full"
             >
-              <Card className="group overflow-hidden h-full flex flex-col border-2 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-2xl bg-gradient-to-br from-card/80 to-card/50 backdrop-blur-sm hover:scale-[1.02]">
-                <CardContent className="p-8 flex flex-col items-center text-center">
-                  {/* Name with gradient background */}
-                  <div className="w-full mb-8 pb-6 border-b border-border/50">
-                    <h3 className="font-heading font-bold text-xl leading-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                      {advisor.name}
-                    </h3>
-                  </div>
+              <Card className="h-full flex flex-col border border-border/50 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-xl bg-card">
+                <CardContent className="p-6 flex flex-col gap-6">
+                  {/* Name */}
+                  <h3 className="font-heading font-bold text-lg text-center">
+                    {advisor.name}
+                  </h3>
                   
-                  <div className="w-full space-y-4">
-                    <div className="flex items-center justify-center gap-2 mb-4">
-                      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-                      <p className="text-sm font-semibold text-primary/80 px-3">Contacto Directo</p>
-                      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-                    </div>
-                    
-                    <div className="grid grid-cols-3 gap-3">
-                      <Button 
-                        size="lg" 
-                        variant="outline" 
-                        asChild 
-                        className="flex-col gap-2 h-auto py-4 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group-hover:border-primary/20"
-                      >
-                        <a href={`tel:${advisor.phone}`} className="flex flex-col gap-1">
-                          <Phone className="h-5 w-5" />
-                          <span className="text-[10px] font-medium">Llamar</span>
-                        </a>
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline" 
-                        asChild 
-                        className="flex-col gap-2 h-auto py-4 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group-hover:border-primary/20"
-                      >
-                        <a href={`mailto:${advisor.email}`} className="flex flex-col gap-1">
-                          <Mail className="h-5 w-5" />
-                          <span className="text-[10px] font-medium">Email</span>
-                        </a>
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline" 
-                        asChild 
-                        className="flex-col gap-2 h-auto py-4 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group-hover:border-primary/20"
-                      >
-                        <a href={`sms:${advisor.phone}`} className="flex flex-col gap-1">
-                          <MessageSquare className="h-5 w-5" />
-                          <span className="text-[10px] font-medium">SMS</span>
-                        </a>
-                      </Button>
-                    </div>
+                  {/* Contact Buttons */}
+                  <div className="grid grid-cols-1 gap-3">
+                    <Button 
+                      size="lg" 
+                      asChild 
+                      className="w-full justify-start gap-3 h-12"
+                    >
+                      <a href={`tel:${advisor.phone}`}>
+                        <Phone className="h-5 w-5" />
+                        <span>Llamar ahora</span>
+                      </a>
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      asChild 
+                      className="w-full justify-start gap-3 h-12"
+                    >
+                      <a href={`mailto:${advisor.email}`}>
+                        <Mail className="h-5 w-5" />
+                        <span>Enviar email</span>
+                      </a>
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      asChild 
+                      className="w-full justify-start gap-3 h-12"
+                    >
+                      <a href={`sms:${advisor.phone}`}>
+                        <MessageSquare className="h-5 w-5" />
+                        <span>Enviar SMS</span>
+                      </a>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
