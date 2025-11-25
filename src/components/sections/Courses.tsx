@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Download } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const courses = [
   {
@@ -49,37 +56,49 @@ export function Courses() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {courses.map((course, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className="h-full hover:shadow-lg transition-shadow flex flex-col">
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <GraduationCap className="h-6 w-6 text-primary" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl mb-2">{course.title}</CardTitle>
-                  <CardDescription className="text-sm">{course.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="mt-auto">
-                  <Button className="w-full" asChild>
-                    <a href={course.pdfUrl} download>
-                      <Download className="mr-2 h-4 w-4" />
-                      Descargar PDF
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-6xl mx-auto"
+        >
+          <CarouselContent>
+            {courses.map((course, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-full"
+                >
+                  <Card className="h-full hover:shadow-lg transition-shadow flex flex-col">
+                    <CardHeader>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="p-3 rounded-lg bg-primary/10">
+                          <GraduationCap className="h-6 w-6 text-primary" />
+                        </div>
+                      </div>
+                      <CardTitle className="text-xl mb-2">{course.title}</CardTitle>
+                      <CardDescription className="text-sm">{course.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="mt-auto">
+                      <Button className="w-full" asChild>
+                        <a href={course.pdfUrl} download>
+                          <Download className="mr-2 h-4 w-4" />
+                          Descargar PDF
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
     </section>
   );
