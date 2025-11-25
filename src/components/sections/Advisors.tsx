@@ -35,8 +35,9 @@ const advisors = [
 
 export function Advisors() {
   return (
-    <section id="advisors" className="py-20 md:py-32 relative">
-      <div className="container mx-auto px-4">
+    <section id="advisors" className="py-20 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/5"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -62,15 +63,15 @@ export function Advisors() {
               whileHover={{ y: -8 }}
               className="h-full"
             >
-              <Card className="overflow-hidden h-full flex flex-col border-2 hover:border-primary/20 transition-all duration-300 shadow-lg hover:shadow-2xl bg-card/50 backdrop-blur-sm">
+              <Card className="group overflow-hidden h-full flex flex-col border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-2xl bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:-translate-y-2">
                 <CardContent className="p-8 flex flex-col items-center text-center flex-1">
                   <motion.div 
                     className="relative w-40 h-40 mb-6"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 blur-xl"></div>
-                    <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-primary/20 shadow-xl">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/50 blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
+                    <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-primary/30 shadow-xl">
                       <img 
                         src={advisor.image} 
                         alt={advisor.name}
@@ -79,11 +80,11 @@ export function Advisors() {
                     </div>
                   </motion.div>
                   
-                  <h3 className="font-heading font-bold text-xl mb-3 leading-tight">
+                  <h3 className="font-heading font-bold text-xl mb-3 leading-tight group-hover:text-primary transition-colors duration-300">
                     {advisor.name}
                   </h3>
                   
-                  <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 mb-4">
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 mb-4">
                     <p className="text-xs text-primary font-semibold uppercase tracking-wide">
                       {advisor.title}
                     </p>
@@ -98,34 +99,31 @@ export function Advisors() {
                     <div className="grid grid-cols-3 gap-3">
                       <Button 
                         size="lg" 
-                        variant="outline" 
                         asChild 
-                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                        className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn border border-primary/20"
                       >
                         <a href={`tel:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
-                          <Phone className="h-5 w-5" />
+                          <Phone className="h-5 w-5 group-hover/btn:scale-110 transition-transform" />
                           <span className="text-[10px] font-medium">Llamar</span>
                         </a>
                       </Button>
                       <Button 
                         size="lg" 
-                        variant="outline" 
                         asChild 
-                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                        className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn border border-primary/20"
                       >
                         <a href={`mailto:${advisor.email}`} className="flex flex-col gap-1 h-auto py-3">
-                          <Mail className="h-5 w-5" />
+                          <Mail className="h-5 w-5 group-hover/btn:scale-110 transition-transform" />
                           <span className="text-[10px] font-medium">Email</span>
                         </a>
                       </Button>
                       <Button 
                         size="lg" 
-                        variant="outline" 
                         asChild 
-                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 group/btn shadow-md"
                       >
                         <a href={`sms:${advisor.phone}`} className="flex flex-col gap-1 h-auto py-3">
-                          <MessageSquare className="h-5 w-5" />
+                          <MessageSquare className="h-5 w-5 group-hover/btn:scale-110 transition-transform" />
                           <span className="text-[10px] font-medium">SMS</span>
                         </a>
                       </Button>
