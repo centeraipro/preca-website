@@ -4,7 +4,16 @@ import { FileCheck, Shield, Star, Building2, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const services = [
   {
@@ -61,34 +70,50 @@ const services = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
-
 export function Services() {
   const [openDialog, setOpenDialog] = useState<number | null>(null);
+  const autoplayPlugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  );
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+
+    setCurrent(carouselApi.selectedScrollSnap());
+
+    carouselApi.on("select", () => {
+      setCurrent(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
+
+  const scrollToSlide = (index: number) => {
+    carouselApi?.scrollTo(index);
+  };
 
   return (
-    <section id="services" className="py-20 md:py-32 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section id="services" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-muted/60 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
+          >
+            <Shield className="h-5 w-5 text-primary" />
+            <span className="text-sm font-medium text-primary">Soluciones Profesionales</span>
+          </motion.div>
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Nuestros Servicios
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -96,111 +121,172 @@ export function Services() {
           </p>
         </motion.div>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {services.map((service, index) => (
-            <motion.div key={index} variants={item}>
-              <Card className="h-full hover:shadow-lg transition-shadow flex flex-col">
-                <CardHeader>
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <service.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <CardDescription className="text-base">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col justify-between">
-                  <ul className="space-y-2 mb-4">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <Dialog open={openDialog === index} onOpenChange={(open) => setOpenDialog(open ? index : null)}>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" className="w-full">
-                        Más información
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                      <DialogHeader>
-                        <DialogTitle className="text-2xl flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <service.icon className="h-5 w-5 text-primary" />
-                          </div>
-                          {service.title}
-                        </DialogTitle>
-                        <DialogDescription className="text-base pt-4">
-                          {service.fullDescription}
-                        </DialogDescription>
-                      </DialogHeader>
+        <div className="relative">
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            plugins={[autoplayPlugin.current]}
+            setApi={setCarouselApi}
+            className="w-full max-w-6xl mx-auto"
+            onMouseEnter={() => autoplayPlugin.current.stop()}
+            onMouseLeave={() => autoplayPlugin.current.play()}
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {services.map((service, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="h-full p-1"
+                  >
+                    <Card className="h-full group relative overflow-hidden border-2 hover:border-primary/30 transition-all duration-500 flex flex-col bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:scale-[1.02]">
+                      {/* Gradient overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       
-                      <div className="space-y-6 py-4">
-                        {'aspects' in service && Array.isArray(service.aspects) && (
-                          <div>
-                            <h3 className="font-semibold text-lg mb-3">Aspectos a evaluar</h3>
-                            <ul className="space-y-2">
-                              {service.aspects.map((aspect: string, idx: number) => (
-                                <li key={idx} className="flex items-start gap-2 text-sm">
-                                  <span className="text-primary font-semibold">{idx + 1}.</span>
-                                  <span>{aspect}</span>
-                                </li>
-                              ))}
-                            </ul>
+                      <CardHeader className="relative z-10">
+                        <div className="flex items-center justify-between mb-4">
+                          <motion.div 
+                            className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 ring-2 ring-primary/10 group-hover:ring-primary/30 transition-all duration-300"
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                          >
+                            <service.icon className="h-7 w-7 text-primary" />
+                          </motion.div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-2 h-2 rounded-full bg-primary/30 group-hover:bg-primary transition-colors"></div>
+                            <div className="w-2 h-2 rounded-full bg-primary/20 group-hover:bg-primary/70 transition-colors"></div>
+                            <div className="w-2 h-2 rounded-full bg-primary/10 group-hover:bg-primary/40 transition-colors"></div>
                           </div>
-                        )}
-                        
-                        {'deliverables' in service && Array.isArray(service.deliverables) && (
-                          <div>
-                            <h3 className="font-semibold text-lg mb-3">Entregables</h3>
-                            <ul className="space-y-2">
-                              {service.deliverables.map((deliverable: string, idx: number) => (
-                                <li key={idx} className="flex items-start gap-2 text-sm">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
-                                  <span>{deliverable}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        
-                        <div>
-                          <h3 className="font-semibold text-lg mb-3">Precios</h3>
-                          <ul className="space-y-2">
-                            {service.pricing.map((price, idx) => (
-                              <li key={idx} className="flex items-center gap-2 text-sm font-medium">
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                                {price}
-                              </li>
-                            ))}
-                          </ul>
                         </div>
+                        <CardTitle className="text-xl mb-3 group-hover:text-primary transition-colors duration-300">
+                          {service.title}
+                        </CardTitle>
+                        <CardDescription className="text-sm leading-relaxed">
+                          {service.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex-1 flex flex-col justify-between relative z-10">
+                        <ul className="space-y-2 mb-4">
+                          {service.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
                         
-                        <Button 
-                          className="w-full gap-2" 
-                          size="lg"
-                          onClick={() => window.open('https://wa.me/529613168341', '_blank')}
-                        >
-                          <MessageCircle className="h-5 w-5" />
-                          Contactar por WhatsApp
-                        </Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+                        <Dialog open={openDialog === index} onOpenChange={(open) => setOpenDialog(open ? index : null)}>
+                          <DialogTrigger asChild>
+                            <Button 
+                              variant="outline" 
+                              className="w-full group/btn relative overflow-hidden border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                            >
+                              <span className="relative z-10">Más información</span>
+                              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle className="text-2xl flex items-center gap-3">
+                                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                  <service.icon className="h-5 w-5 text-primary" />
+                                </div>
+                                {service.title}
+                              </DialogTitle>
+                              <DialogDescription className="text-base pt-4">
+                                {service.fullDescription}
+                              </DialogDescription>
+                            </DialogHeader>
+                            
+                            <div className="space-y-6 py-4">
+                              {'aspects' in service && Array.isArray(service.aspects) && (
+                                <div>
+                                  <h3 className="font-semibold text-lg mb-3">Aspectos a evaluar</h3>
+                                  <ul className="space-y-2">
+                                    {service.aspects.map((aspect: string, idx: number) => (
+                                      <li key={idx} className="flex items-start gap-2 text-sm">
+                                        <span className="text-primary font-semibold">{idx + 1}.</span>
+                                        <span>{aspect}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {'deliverables' in service && Array.isArray(service.deliverables) && (
+                                <div>
+                                  <h3 className="font-semibold text-lg mb-3">Entregables</h3>
+                                  <ul className="space-y-2">
+                                    {service.deliverables.map((deliverable: string, idx: number) => (
+                                      <li key={idx} className="flex items-start gap-2 text-sm">
+                                        <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2" />
+                                        <span>{deliverable}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              <div>
+                                <h3 className="font-semibold text-lg mb-3">Precios</h3>
+                                <ul className="space-y-2">
+                                  {service.pricing.map((price, idx) => (
+                                    <li key={idx} className="flex items-center gap-2 text-sm font-medium">
+                                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                                      {price}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              
+                              <Button 
+                                className="w-full gap-2 group/btn relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300" 
+                                size="lg"
+                                onClick={() => window.open('https://wa.me/529613168341', '_blank')}
+                              >
+                                <MessageCircle className="h-5 w-5 group-hover/btn:animate-bounce" />
+                                <span className="relative z-10">Contactar por WhatsApp</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
+                              </Button>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            {/* Custom styled navigation buttons */}
+            <CarouselPrevious className="left-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
+            <CarouselNext className="right-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
+          </Carousel>
+          
+          {/* Interactive progress indicator */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex justify-center gap-2 mt-8"
+          >
+            {services.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToSlide(index)}
+                className={`h-1.5 w-12 rounded-full transition-all duration-500 hover:scale-110 ${
+                  current === index
+                    ? "bg-primary w-16 shadow-lg shadow-primary/50"
+                    : "bg-primary/20 hover:bg-primary/40"
+                }`}
+                aria-label={`Ir al servicio ${index + 1}`}
+              ></button>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
