@@ -181,11 +181,10 @@ export function Services() {
                         <Dialog open={openDialog === index} onOpenChange={(open) => setOpenDialog(open ? index : null)}>
                           <DialogTrigger asChild>
                             <Button 
-                              variant="outline" 
-                              className="w-full group/btn relative overflow-hidden border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                              className="w-full group/btn relative overflow-hidden bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
                             >
                               <span className="relative z-10">Más información</span>
-                              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
+                              <div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                             </Button>
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
