@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import logo from "@/assets/preca-logo.png";
 
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-primary/10">
       <div className="absolute inset-0 bg-gradient-to-br from-card via-primary/5 to-card"></div>
-      <div className="container mx-auto px-4 py-12 relative z-10">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="container mx-auto px-4 py-12 relative z-10"
+      >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2">
             <img src={logo} alt="Preca Logo" className="h-12 w-auto mb-4 drop-shadow-lg" />
@@ -81,7 +88,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 }
