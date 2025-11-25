@@ -52,17 +52,30 @@ export function Contact() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10"></div>
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <motion.h2 
+            initial={{ opacity: 0, rotateY: -10 }}
+            whileInView={{ opacity: 1, rotateY: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-3xl md:text-5xl font-heading font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+          >
             Contáctanos
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
             ¿Tienes preguntas? Nuestro equipo está listo para ayudarte
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -71,10 +84,14 @@ export function Contact() {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: item.delay }}
+                initial={{ opacity: 0, y: 40, rotateX: 20, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  delay: index * 0.1,
+                  duration: 0.7,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
               >
                 <Card className="group h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-primary/10 bg-gradient-to-br from-card to-card/50 backdrop-blur-sm">
                   <CardContent className="pt-8 pb-8 text-center">
