@@ -6,27 +6,27 @@ import { GraduationCap, Download } from "lucide-react";
 const courses = [
   {
     title: "Por qué precalificar a un prospecto a inquilino",
-    description: "Este curso te enseñará la importancia de la precalificación de prospectos a inquilinos en el mercado de rentas inmobiliarias. Aprenderás a identificar características clave, preguntas que debes hacer y cómo evaluar la capacidad de pago de un potencial inquilino. Con herramientas prácticas y estrategias efectivas, estarás en condiciones de tomar decisiones informadas que beneficien tu negocio.",
+    description: "Aprende a identificar y evaluar prospectos a inquilinos con herramientas prácticas para tomar decisiones informadas.",
     pdfUrl: "/courses/por-que-precalificar.pdf",
   },
   {
     title: "Cómo realizar una estimación de valor en inmueble en renta",
-    description: "Este curso te enseñará los principios y métodos para realizar una estimación de valor en un inmueble destinado a renta. A través de ejemplos prácticos y herramientas de análisis, podrás entender cómo calcular el valor de una propiedad de manera efectiva y justa.",
+    description: "Domina los métodos de estimación de valor en propiedades de renta con ejemplos prácticos y herramientas de análisis.",
     pdfUrl: "/courses/estimacion-valor.pdf",
   },
   {
     title: "Como evitar fraudes inmobiliarios",
-    description: "Este curso está diseñado para ayudar a los compradores de propiedades en México a identificar y prevenir fraudes inmobiliarios. A través de ejemplos prácticos, información legal y estrategias de prevención, los participantes aprenderán a reconocer las señales de advertencia y a tomar decisiones informadas al realizar transacciones inmobiliarias.",
+    description: "Identifica y previene fraudes inmobiliarios con estrategias prácticas y conocimiento legal aplicable en México.",
     pdfUrl: "/courses/evitar-fraudes.pdf",
   },
   {
     title: "EL ROI EN INVERSIÓN DE INMUEBLES EN ARRENDAMIENTO",
-    description: "Este curso te enseñará los fundamentos del ROI (Retorno de la Inversión) en el contexto de los inmuebles de arrendamiento. Aprenderás a evaluar la rentabilidad de tus inversiones y a calcular el ROI correctamente, permitiéndote tomar decisiones financieras informadas. Además, exploraremos ejemplos prácticos y técnicas que puedes aplicar en el mercado real.",
+    description: "Aprende a calcular y evaluar el ROI en inversiones inmobiliarias de arrendamiento para tomar decisiones financieras informadas.",
     pdfUrl: "/courses/roi-inmuebles.pdf",
   },
   {
     title: "CUMPLIMIENTO DE LA LEY ANTILAVADO DE DINERO",
-    description: "Este curso proporciona una visión general de los aspectos clave que deben considerarse para cumplir con la ley antilavado de dinero en el contexto de la renta de un inmueble en México. A través de una combinación de teoría y casos prácticos, los participantes aprenderán sobre los requisitos legales, las mejores prácticas y cómo implementar medidas efectivas para prevenir el lavado de dinero en sus operaciones inmobiliarias.",
+    description: "Conoce los requisitos legales y mejores prácticas para cumplir con la ley antilavado de dinero en rentas inmobiliarias.",
     pdfUrl: "/courses/ley-antilavado.pdf",
   },
 ];
