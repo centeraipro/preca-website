@@ -62,6 +62,7 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         "primary-light": "hsl(var(--primary-light))",
+        "brand-teal": "hsl(var(--brand-teal))",
       },
       boxShadow: {
         sm: "var(--shadow-sm)",
