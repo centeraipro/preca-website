@@ -33,71 +33,83 @@ export const Footer7 = ({
   legalLinks = [],
 }: Footer7Props) => {
   return (
-    <section className="py-32 bg-card border-t">
-      <div className="container mx-auto">
-        <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left">
-          <div className="flex w-full flex-col justify-between gap-6 lg:items-start">
-            {/* Logo */}
+    <footer className="relative bg-background border-t border-border/40">
+      <div className="container mx-auto px-4 py-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Brand Section */}
+          <div className="lg:col-span-2">
             {logo && (
-              <div className="flex items-center gap-2 lg:justify-start">
-                <a href={logo.url}>
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    title={logo.title}
-                    className="h-12"
-                  />
-                </a>
-              </div>
+              <a href={logo.url} className="inline-block mb-6">
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  title={logo.title}
+                  className="h-10"
+                />
+              </a>
             )}
             {description && (
-              <p className="max-w-[70%] text-sm text-muted-foreground">
+              <p className="text-muted-foreground leading-relaxed mb-6 max-w-md">
                 {description}
               </p>
             )}
             {socialLinks.length > 0 && (
-              <ul className="flex items-center space-x-6 text-muted-foreground">
+              <div className="flex items-center gap-4">
                 {socialLinks.map((social, idx) => (
-                  <li key={idx} className="font-medium hover:text-primary transition-colors">
-                    <a href={social.href} aria-label={social.label}>
-                      {social.icon}
+                  <a
+                    key={idx}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Links Sections */}
+          {sections.map((section, sectionIdx) => (
+            <div key={sectionIdx}>
+              <h3 className="font-semibold text-foreground mb-4">
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.links.map((link, linkIdx) => (
+                  <li key={linkIdx}>
+                    <a
+                      href={link.href}
+                      className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                    >
+                      {link.name}
                     </a>
                   </li>
                 ))}
               </ul>
-            )}
-          </div>
-          <div className="grid w-full gap-6 md:grid-cols-2 lg:gap-20">
-            {sections.map((section, sectionIdx) => (
-              <div key={sectionIdx}>
-                <h3 className="mb-4 font-bold">{section.title}</h3>
-                <ul className="space-y-3 text-sm text-muted-foreground">
-                  {section.links.map((link, linkIdx) => (
-                    <li
-                      key={linkIdx}
-                      className="font-medium hover:text-primary transition-colors"
-                    >
-                      <a href={link.href}>{link.name}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-        <div className="mt-8 flex flex-col justify-between gap-4 border-t pt-8 text-xs font-medium text-muted-foreground md:flex-row md:items-center md:text-left">
-          <p className="order-2 lg:order-1">{copyright}</p>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">{copyright}</p>
           {legalLinks.length > 0 && (
-            <ul className="order-1 flex flex-col gap-2 md:order-2 md:flex-row md:gap-6">
+            <div className="flex items-center gap-6">
               {legalLinks.map((link, idx) => (
-                <li key={idx} className="hover:text-primary transition-colors">
-                  <a href={link.href}>{link.name}</a>
-                </li>
+                <a
+                  key={idx}
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  {link.name}
+                </a>
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </div>
-    </section>
+    </footer>
   );
 };
