@@ -146,7 +146,7 @@ export function Courses() {
                           <a href={course.pdfUrl} download>
                             <span className="relative z-10 flex items-center justify-center gap-2">
                               <Download className="h-4 w-4 group-hover/btn:animate-bounce" />
-                              Descargar PDF
+                              Obtener Curso
                             </span>
                             <div className="absolute inset-0 bg-gradient-to-r from-primary-foreground/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                           </a>
