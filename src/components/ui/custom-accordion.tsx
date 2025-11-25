@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { HelpCircle, MessageCircle, ChevronDown } from 'lucide-react';
+import { HelpCircle, ChevronDown } from 'lucide-react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { cn } from '@/lib/utils';
 
@@ -65,9 +65,6 @@ const CustomAccordionContent = React.forwardRef<
 		<div className="mt-4 ml-14">
 			<div className="flex items-start gap-4 rounded-2xl bg-card dark:bg-zinc-700 p-4 shadow-md transition-all">
 				<span className="flex-1 text-md leading-relaxed text-muted-foreground dark:text-zinc-100">{children}</span>
-				<div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-muted dark:bg-zinc-600 transition-transform hover:scale-105">
-					<MessageCircle className="h-5 w-5 text-foreground dark:text-white" />
-				</div>
 			</div>
 		</div>
 	</AccordionPrimitive.Content>
