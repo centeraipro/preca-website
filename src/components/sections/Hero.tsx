@@ -10,8 +10,8 @@ export function Hero() {
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ 
               duration: 0.6,
               ease: "easeOut"
@@ -21,8 +21,8 @@ export function Hero() {
               Precalificación de Inquilinos{" "}
               <motion.span 
                 className="text-gradient"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               >
                 Confiable y Segura
@@ -89,8 +89,8 @@ export function Hero() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: index === 0 ? -40 : index === 1 ? 0 : 40, y: index === 1 ? 40 : 0 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
                 transition={{ 
                   duration: 0.5, 
                   delay: 0.8 + index * 0.1,
