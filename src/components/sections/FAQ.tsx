@@ -79,7 +79,6 @@ export function FAQ() {
           <CustomAccordion
             type="single"
             collapsible
-            defaultValue="item-0"
             className="space-y-6"
           >
             {faqs.map((faq, index) => (
