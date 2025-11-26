@@ -9,20 +9,22 @@ export function Hero() {
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ 
-              duration: 0.6,
-              ease: "easeOut"
-            }}
-          >
+      <motion.div
+        initial={{ opacity: 0, x: -60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: false }}
+        transition={{ 
+          duration: 0.6,
+          ease: "easeOut"
+        }}
+      >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight">
               Precalificación de Inquilinos{" "}
               <motion.span 
                 className="text-gradient"
                 initial={{ opacity: 0, x: 60 }}
-                animate={{ opacity: 1, x: 0 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               >
                 Confiable y Segura
@@ -32,7 +34,8 @@ export function Hero() {
 
           <motion.p
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
             transition={{ 
               duration: 0.6, 
               delay: 0.3,
@@ -46,7 +49,8 @@ export function Hero() {
 
           <motion.div
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
             transition={{ 
               duration: 0.6, 
               delay: 0.5,
@@ -78,7 +82,8 @@ export function Hero() {
 
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.7 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto"
           >
@@ -90,7 +95,8 @@ export function Hero() {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: index === 0 ? -40 : index === 1 ? 0 : 40, y: index === 1 ? 40 : 0 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: false }}
                 transition={{ 
                   duration: 0.5, 
                   delay: 0.8 + index * 0.1,
