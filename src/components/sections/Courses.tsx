@@ -76,10 +76,10 @@ export function Courses() {
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            whileInView={{ scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <GraduationCap className="h-5 w-5 text-primary" />
