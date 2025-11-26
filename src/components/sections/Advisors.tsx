@@ -27,36 +27,65 @@ export function Advisors() {
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
+            initial={{ scale: 0, rotate: 180 }}
+            whileInView={{ scale: 1, rotate: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <Users className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Equipo Especializado</span>
           </motion.div>
-          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2, type: "spring" }}
+            className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+          >
             Nuestros Asesores
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
             Profesionales certificados listos para ayudarte en tu proceso de precalificación
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {advisors.map((advisor, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              initial={{ 
+                opacity: 0, 
+                y: 50,
+                x: index % 2 === 0 ? -30 : 30,
+                rotateX: 45
+              }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0,
+                x: 0,
+                rotateX: 0
+              }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                duration: 0.8,
+                delay: index * 0.15,
+                type: "spring",
+                stiffness: 100
+              }}
               className="group relative"
             >
               {/* Card with gradient border effect */}

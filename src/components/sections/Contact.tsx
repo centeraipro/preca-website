@@ -54,26 +54,40 @@ export function Contact() {
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
+            initial={{ scale: 0, rotate: -180 }}
+            whileInView={{ scale: 1, rotate: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <Headset className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Atención al Cliente</span>
           </motion.div>
-          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2, type: "spring" }}
+            className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+          >
             Contáctanos
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
             ¿Tienes preguntas? Nuestro equipo está listo para ayudarte
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -82,18 +96,44 @@ export function Contact() {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: item.delay }}
+                initial={{ 
+                  opacity: 0, 
+                  y: 50,
+                  scale: 0.9,
+                  rotateZ: index % 2 === 0 ? -10 : 10
+                }}
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0,
+                  scale: 1,
+                  rotateZ: 0
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  duration: 0.7,
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 100
+                }}
               >
                 <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                   <CardContent className="pt-8 pb-8 text-center">
-                    <div className="flex justify-center mb-6">
+                    <motion.div 
+                      className="flex justify-center mb-6"
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        duration: 0.6,
+                        delay: index * 0.1 + 0.2,
+                        type: "spring",
+                        stiffness: 200
+                      }}
+                    >
                       <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
                         <Icon className="h-10 w-10 text-primary" />
                       </div>
-                    </div>
+                    </motion.div>
                     
                     <h3 className="text-xl font-bold text-primary mb-3">
                       {item.title}
