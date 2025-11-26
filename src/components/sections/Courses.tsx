@@ -127,14 +127,13 @@ export function Courses() {
               {courses.map((course, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
-                    whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? 60 : -60, y: 40 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ 
-                      duration: 0.7,
+                      duration: 0.6,
                       delay: index * 0.1,
-                      type: "spring",
-                      stiffness: 100
+                      ease: "easeOut"
                     }}
                     className="h-full p-1"
                   >
