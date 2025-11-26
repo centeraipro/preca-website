@@ -99,17 +99,17 @@ export function Services() {
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            whileInView={{ scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <Shield className="h-5 w-5 text-primary" />
@@ -119,23 +119,29 @@ export function Services() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
           >
             Nuestros Servicios
           </motion.h2>
           <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
             Soluciones adaptadas a cada necesidad de precalificación
           </motion.p>
         </motion.div>
 
-        <div className="relative">
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          className="relative"
+        >
           <Carousel
             opts={{
               align: "center",
@@ -305,7 +311,7 @@ export function Services() {
               ></button>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

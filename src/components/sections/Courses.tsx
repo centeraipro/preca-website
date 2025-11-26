@@ -89,23 +89,29 @@ export function Courses() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
           >
             Nuestros Cursos
           </motion.h2>
           <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
             Capacitación profesional para propietarios y administradores de propiedades
           </motion.p>
         </motion.div>
 
-        <div className="relative">
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          className="relative"
+        >
           <Carousel
             opts={{
               align: "center",
@@ -202,7 +208,7 @@ export function Courses() {
               ></button>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

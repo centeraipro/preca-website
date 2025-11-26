@@ -10,21 +10,20 @@ export function Hero() {
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 0.8,
-              type: "spring",
-              stiffness: 100
+              duration: 0.6,
+              ease: "easeOut"
             }}
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight">
               Precalificación de Inquilinos{" "}
               <motion.span 
                 className="text-gradient"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               >
                 Confiable y Segura
               </motion.span>
@@ -32,13 +31,12 @@ export function Hero() {
           </motion.div>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              duration: 0.8, 
-              delay: 0.2,
-              type: "spring",
-              stiffness: 80
+              duration: 0.6, 
+              delay: 0.3,
+              ease: "easeOut"
             }}
             className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
           >
@@ -47,13 +45,12 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ 
               duration: 0.6, 
-              delay: 0.4,
-              type: "spring",
-              stiffness: 100
+              delay: 0.5,
+              ease: "easeOut"
             }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
@@ -82,7 +79,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto"
           >
             {[
@@ -92,28 +89,16 @@ export function Hero() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30, y: 20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ 
-                  duration: 0.7, 
-                  delay: 0.8 + index * 0.15,
-                  type: "spring",
-                  stiffness: 100
+                  duration: 0.5, 
+                  delay: 0.8 + index * 0.1,
+                  ease: "easeOut"
                 }}
                 className="flex items-center justify-center gap-2 text-foreground/80"
               >
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.9 + index * 0.15,
-                    type: "spring",
-                    stiffness: 200
-                  }}
-                >
-                  <CheckCircle2 className="h-5 w-5 text-primary" />
-                </motion.div>
+                <CheckCircle2 className="h-5 w-5 text-primary" />
                 <span className="font-medium">{item}</span>
               </motion.div>
             ))}

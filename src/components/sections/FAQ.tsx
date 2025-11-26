@@ -48,27 +48,27 @@ export function FAQ() {
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-20"
         >
           <motion.div
-            initial={{ scale: 0, rotate: 180 }}
-            whileInView={{ scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <BookOpen className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Información Esencial</span>
           </motion.div>
           <motion.h2 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2, type: "spring" }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
           >
             Preguntas Frecuentes
@@ -77,7 +77,7 @@ export function FAQ() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
             Resolvemos las dudas más comunes sobre nuestros servicios
@@ -95,20 +95,17 @@ export function FAQ() {
                 key={index}
                 initial={{ 
                   opacity: 0, 
-                  x: index % 2 === 0 ? -50 : 50,
-                  y: 30
+                  y: 50
                 }}
                 whileInView={{ 
                   opacity: 1, 
-                  x: 0,
                   y: 0
                 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ 
-                  duration: 0.6,
+                  duration: 0.5,
                   delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 100
+                  ease: "easeOut"
                 }}
               >
                 <CustomAccordionItem value={`item-${index}`}>
