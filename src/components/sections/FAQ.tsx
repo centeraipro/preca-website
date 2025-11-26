@@ -62,7 +62,7 @@ export function FAQ() {
             <BookOpen className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Información Esencial</span>
           </motion.div>
-          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             Preguntas Frecuentes
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
