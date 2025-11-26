@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 interface Footer7Props {
   socialLinks?: Array<{
@@ -16,10 +17,22 @@ export const Footer7 = ({
   return (
     <footer className="relative bg-background border-t border-border/40">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <motion.div
+          className="flex flex-col md:flex-row justify-between items-center gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: false, amount: 0.3 }}
+        >
           {/* Social Links */}
           {socialLinks.length > 0 && (
-            <div className="flex items-center gap-4">
+            <motion.div
+              className="flex items-center gap-4"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: false, amount: 0.3 }}
+            >
               {socialLinks.map((social, idx) => (
                 <a
                   key={idx}
@@ -30,14 +43,20 @@ export const Footer7 = ({
                   {social.icon}
                 </a>
               ))}
-            </div>
+            </motion.div>
           )}
 
           {/* Copyright */}
-          <p className="text-sm text-muted-foreground text-center md:text-right">
+          <motion.p
+            className="text-sm text-muted-foreground text-center md:text-right"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: false, amount: 0.3 }}
+          >
             {copyright}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </footer>
   );
