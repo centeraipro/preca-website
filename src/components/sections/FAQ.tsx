@@ -11,7 +11,7 @@ const faqs = [
   {
     question: "¿Cuánto tiempo tarda el proceso de precalificación?",
     answer:
-      "El tiempo de respuesta varía según el tipo de servicio: PRECA INE tarda 24 horas, mientras que servicios más completos como PRECA PRO o PRECA COMPLETA pueden tardar entre 24-48 horas hábiles.",
+      "Hemos optimizado nuestros procesos para ofrecer resultados en menos de 1 hora hábil para todos nuestros servicios: PRECA INE, PRECA PRO, PRECA COMPLETA y PRECA EXTRANJEROS.",
   },
   {
     question: "¿Qué documentos necesito para la precalificación?",
@@ -45,39 +45,39 @@ export function FAQ() {
     <section id="faq" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-20"
         >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 mb-6"
           >
             <BookOpen className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Información Esencial</span>
           </motion.div>
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             className="text-4xl md:text-6xl font-heading font-bold mb-6 pb-2 leading-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
           >
             Preguntas Frecuentes
           </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
             Resolvemos las dudas más comunes sobre nuestros servicios
@@ -93,18 +93,18 @@ export function FAQ() {
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ 
-                  opacity: 0, 
+                initial={{
+                  opacity: 0,
                   x: index % 2 === 0 ? -60 : 60,
                   y: 30
                 }}
-                whileInView={{ 
-                  opacity: 1, 
+                whileInView={{
+                  opacity: 1,
                   x: 0,
                   y: 0
                 }}
                 viewport={{ once: false, margin: "-50px" }}
-                transition={{ 
+                transition={{
                   duration: 0.6,
                   delay: index * 0.1,
                   ease: "easeOut"

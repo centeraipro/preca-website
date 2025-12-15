@@ -30,12 +30,12 @@ const courses = [
     pdfUrl: "/courses/evitar-fraudes.pdf",
   },
   {
-    title: "EL ROI EN INVERSIÓN DE INMUEBLES EN ARRENDAMIENTO",
+    title: "El ROI en Inversión de Inmuebles en Arrendamiento",
     description: "Aprende a calcular y evaluar el ROI en inversiones inmobiliarias de arrendamiento para tomar decisiones financieras informadas.",
     pdfUrl: "/courses/roi-inmuebles.pdf",
   },
   {
-    title: "CUMPLIMIENTO DE LA LEY ANTILAVADO DE DINERO",
+    title: "Cumplimiento de la Ley Antilavado de Dinero",
     description: "Conoce los requisitos legales y mejores prácticas para cumplir con la ley antilavado de dinero en rentas inmobiliarias.",
     pdfUrl: "/courses/ley-antilavado.pdf",
   },
@@ -66,7 +66,7 @@ export function Courses() {
     <section id="courses" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-muted/60 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -85,7 +85,7 @@ export function Courses() {
             <GraduationCap className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium text-primary">Capacitación Profesional</span>
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
@@ -94,7 +94,7 @@ export function Courses() {
           >
             Nuestros Cursos
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
@@ -127,10 +127,10 @@ export function Courses() {
               {courses.map((course, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                   <motion.div
-                    initial={{ opacity: 0, x: index % 2 === 0 ? 60 : -60, y: 40 }}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    viewport={{ once: false, margin: "-50px" }}
-                    transition={{ 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
                       duration: 0.6,
                       delay: index * 0.1,
                       ease: "easeOut"
@@ -140,10 +140,10 @@ export function Courses() {
                     <Card className="h-full group relative overflow-hidden border-2 hover:border-primary/30 transition-all duration-500 flex flex-col bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:scale-[1.02]">
                       {/* Gradient overlay on hover */}
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      
+
                       <CardHeader className="relative z-10">
                         <div className="flex items-center justify-between mb-4">
-                          <motion.div 
+                          <motion.div
                             className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 ring-2 ring-primary/10 group-hover:ring-primary/30 transition-all duration-300"
                             whileHover={{ scale: 1.1, rotate: 5 }}
                           >
@@ -163,8 +163,8 @@ export function Courses() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="mt-auto relative z-10">
-                        <Button 
-                          className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300" 
+                        <Button
+                          className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all duration-300"
                           asChild
                         >
                           <a href={course.pdfUrl} download>
@@ -181,14 +181,14 @@ export function Courses() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            
+
             {/* Custom styled navigation buttons */}
-            <CarouselPrevious className="left-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
-            <CarouselNext className="right-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
+            <CarouselPrevious className="hidden md:flex left-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
+            <CarouselNext className="hidden md:flex right-[-50px] h-12 w-12 border-2 border-primary/20 bg-background/80 backdrop-blur-sm hover:bg-primary hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300" />
           </Carousel>
-          
+
           {/* Interactive progress indicator */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: false }}
@@ -198,11 +198,10 @@ export function Courses() {
               <button
                 key={index}
                 onClick={() => scrollToSlide(index)}
-                className={`h-1.5 w-12 rounded-full transition-all duration-500 hover:scale-110 ${
-                  current === index
-                    ? "bg-primary w-16 shadow-lg shadow-primary/50"
-                    : "bg-primary/20 hover:bg-primary/40"
-                }`}
+                className={`h-1.5 w-12 rounded-full transition-all duration-500 hover:scale-110 ${current === index
+                  ? "bg-primary w-16 shadow-lg shadow-primary/50"
+                  : "bg-primary/20 hover:bg-primary/40"
+                  }`}
                 aria-label={`Ir al curso ${index + 1}`}
               ></button>
             ))}

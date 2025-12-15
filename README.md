@@ -1,73 +1,106 @@
-# Welcome to your Lovable project
+# Preca - Precalificación de Inquilinos
 
-## Project info
+Sitio web oficial de **Preca** (Servicios Inmobiliarios Jucerama SA de CV), empresa líder en precalificación de inquilinos en México.
 
-**URL**: https://lovable.dev/projects/1f7fee34-2658-48a5-8fb5-d961a89d7f0f
+## Acerca del Proyecto
 
-## How can I edit this code?
+Este sitio web profesional ofrece información sobre los servicios especializados de precalificación de inquilinos, cursos de capacitación, y recursos para propietarios e inmobiliarias en todo México.
 
-There are several ways of editing your application.
+## Tecnologías Utilizadas
 
-**Use Lovable**
+- **Vite** - Build tool y dev server
+- **React 18** - Librería de UI
+- **TypeScript** - Tipado estático
+- **Tailwind CSS** - Framework de estilos
+- **shadcn/ui** - Componentes de UI
+- **Framer Motion** - Animaciones
+- **React Router** - Navegación
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1f7fee34-2658-48a5-8fb5-d961a89d7f0f) and start prompting.
+## Requisitos Previos
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js 16 o superior
+- npm o bun
 
-**Use your preferred IDE**
+## Instalación
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Clonar el repositorio
+git clone <URL_DEL_REPOSITORIO>
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Navegar al directorio del proyecto
+cd preca-website
 
-Follow these steps:
+# Instalar dependencias
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Iniciar servidor de desarrollo
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+El sitio estará disponible en `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Scripts Disponibles
 
-**Use GitHub Codespaces**
+- `npm run dev` - Inicia el servidor de desarrollo
+- `npm run build` - Genera el build de producción
+- `npm run build:dev` - Genera el build en modo desarrollo
+- `npm run preview` - Previsualiza el build de producción
+- `npm run lint` - Ejecuta el linter
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Estructura del Proyecto
 
-## What technologies are used for this project?
+```
+preca-website/
+├── public/          # Archivos estáticos
+│   └── courses/     # PDFs de cursos
+├── src/
+│   ├── components/  # Componentes React
+│   │   ├── sections/  # Secciones de la página
+│   │   └── ui/        # Componentes de UI reutilizables
+│   ├── pages/       # Páginas de la aplicación
+│   ├── hooks/       # React hooks personalizados
+│   └── lib/         # Utilidades
+└── ...
+```
 
-This project is built with:
+## Despliegue
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Build de Producción
 
-## How can I deploy this project?
+```bash
+npm run build
+```
 
-Simply open [Lovable](https://lovable.dev/projects/1f7fee34-2658-48a5-8fb5-d961a89d7f0f) and click on Share -> Publish.
+Los archivos optimizados se generarán en el directorio `dist/`.
 
-## Can I connect a custom domain to my Lovable project?
+### Opciones de Hosting
 
-Yes, you can!
+El sitio puede desplegarse en cualquier servicio de hosting estático:
+- Vercel
+- Netlify
+- GitHub Pages
+- AWS S3 + CloudFront
+- Firebase Hosting
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Características
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- ✅ Diseño responsive y moderno
+- ✅ Modo claro/oscuro
+- ✅ Optimizado para SEO
+- ✅ Animaciones suaves
+- ✅ Accesibilidad (a11y)
+- ✅ Formulario de contacto
+- ✅ Información de cursos descargables
+- ✅ Sección de asesores
+
+## Contacto
+
+**Preca - Servicios Inmobiliarios Jucerama SA de CV**
+
+- Email: contacto@preca.com.mx
+- Sitio web: https://preca.com.mx
+- Teléfono: +52 55 1234 5678
+
+## Licencia
+
+© 2024 Preca. Todos los derechos reservados.

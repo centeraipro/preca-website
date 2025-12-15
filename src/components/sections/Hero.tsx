@@ -89,7 +89,7 @@ export function Hero() {
           >
             {[
               "Cobertura Nacional",
-              "Resultados en 24-48hrs",
+              "Resultados en Menos de 1 Hora",
               "Verificación Profesional",
             ].map((item, index) => (
               <motion.div

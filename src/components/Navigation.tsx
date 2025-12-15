@@ -9,7 +9,7 @@ import logo from "@/assets/preca-logo.png";
 const navItems = [
   { name: "Inicio", href: "#home" },
   { name: "Servicios", href: "#services" },
-  { name: "Asesores", href: "#advisors" },
+
   { name: "Cursos", href: "#courses" },
   { name: "FAQ", href: "#faq" },
   { name: "Contacto", href: "#contact" },
@@ -23,7 +23,7 @@ export function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      
+
       // Detect active section
       const sections = navItems.map(item => item.href.replace('#', ''));
       const scrollPosition = window.scrollY + 100;
@@ -39,7 +39,7 @@ export function Navigation() {
         }
       }
     };
-    
+
     handleScroll(); // Initial check
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -47,33 +47,42 @@ export function Navigation() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      const offset = 80; // Account for fixed navbar height
-      const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
-      
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
+
+    const scrollToTarget = () => {
+      const target = document.querySelector(href);
+      if (target) {
+        const offset = 80; // Account for fixed navbar height
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    if (isOpen) {
+      setIsOpen(false);
+      // Small delay to allow the menu to close/animate out before scrolling
+      setTimeout(scrollToTarget, 300);
+    } else {
+      scrollToTarget();
     }
-    setIsOpen(false);
   };
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-background/95 backdrop-blur-md shadow-md"
+        : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20 md:h-24">
+        <div className="flex items-center justify-between h-20 md:h-28">
           <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt="Preca Logo" className="h-20 md:h-24 w-auto" />
+            <img src={logo} alt="Preca Logo" className="h-32 md:h-48 w-auto dark:brightness-0 dark:invert" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -85,11 +94,10 @@ export function Navigation() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`transition-colors font-medium relative ${
-                    isActive 
-                      ? 'text-green-500' 
-                      : 'text-foreground/80 hover:text-primary'
-                  }`}
+                  className={`transition-colors font-medium relative ${isActive
+                    ? 'text-green-500'
+                    : 'text-foreground/80 hover:text-primary'
+                    }`}
                 >
                   {item.name}
                   {isActive && (
@@ -138,11 +146,10 @@ export function Navigation() {
                     key={item.name}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`block py-2 transition-colors font-medium ${
-                      isActive 
-                        ? 'text-green-500' 
-                        : 'text-foreground/80 hover:text-primary'
-                    }`}
+                    className={`block py-2 transition-colors font-medium ${isActive
+                      ? 'text-green-500'
+                      : 'text-foreground/80 hover:text-primary'
+                      }`}
                   >
                     {item.name}
                   </a>
