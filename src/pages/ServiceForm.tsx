@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useServices } from "@/hooks/use-services";
 import { createScreening } from "@/lib/screening-api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { Service, FormField } from "@/types/service";
 
@@ -23,6 +23,11 @@ export default function ServiceForm() {
   const [applicantEmail, setApplicantEmail] = useState("");
   const [applicantPhone, setApplicantPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const service = services?.find(s => s.id.toString() === serviceId);
   const isFileService = service?.formSchema.fields.some(f => f.type === "file");
