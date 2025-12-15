@@ -276,7 +276,7 @@ export default function PrecaPricingSection() {
         animationNum={2}
         timelineRef={pricingRef}
         customVariants={revealVariants}
-        className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto bg-gradient-to-b from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 sm:p-3 rounded-lg"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mx-auto bg-gradient-to-b from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 p-2 sm:p-3 md:p-4 rounded-lg"
       >
         {sortedServices.map((group, index) => {
           const ServiceIcon = getServiceIcon(group.baseName);
@@ -296,20 +296,22 @@ export default function PrecaPricingSection() {
             >
               <motion.div
                 whileHover={{
-                  scale: isPopular ? 1.12 : 1.05,
-                  y: -8,
+                  scale: isPopular ? 1.03 : 1.02,
+                  y: -4,
                 }}
+                whileTap={{ scale: 0.98 }}
                 transition={{
                   type: "spring",
                   stiffness: 300,
                   damping: 20
                 }}
+                className="h-full"
               >
                 <Card
-                  className={`relative flex-col flex justify-between cursor-pointer transition-all duration-300 ${
+                  className={`relative flex-col flex justify-between cursor-pointer transition-all duration-300 h-full ${
                     isPopular
-                      ? "scale-110 ring-2 ring-neutral-900 dark:ring-neutral-700 bg-gradient-to-t from-black to-neutral-900 text-white hover:shadow-2xl hover:shadow-neutral-900/50"
-                      : "border-none shadow-none bg-transparent pt-4 text-foreground hover:shadow-xl hover:shadow-neutral-500/20 dark:hover:shadow-neutral-700/30"
+                      ? "md:scale-105 ring-2 ring-neutral-900 dark:ring-neutral-700 bg-gradient-to-t from-black to-neutral-900 text-white hover:shadow-2xl hover:shadow-neutral-900/50"
+                      : "bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 pt-4 hover:shadow-xl hover:shadow-neutral-500/20 dark:hover:shadow-neutral-700/30"
                   }`}
                   onClick={() => handleCardClick(group)}
                 >
@@ -324,22 +326,23 @@ export default function PrecaPricingSection() {
                     )}
 
                     <div className="flex items-baseline">
-                      <span className="text-4xl font-semibold">
+                      <span className="text-3xl md:text-4xl font-semibold">
                         $
                         <NumberFlow
                           format={{
                             currency: "USD",
                           }}
                           value={price}
-                          className="text-4xl font-semibold"
+                          className="text-3xl md:text-4xl font-semibold"
                         />
                       </span>
                       <span
-                        className={
+                        className={cn(
+                          "ml-1 text-sm md:text-base",
                           isPopular
-                            ? "text-neutral-200 ml-1"
-                            : "text-gray-600 ml-1"
-                        }
+                            ? "text-neutral-200"
+                            : "text-muted-foreground"
+                        )}
                       >
                         MXN
                       </span>
@@ -347,30 +350,33 @@ export default function PrecaPricingSection() {
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <h3 className="text-2xl font-semibold mb-2">{group.displayName}</h3>
+                    <h3 className="text-xl md:text-2xl font-semibold mb-2">{group.displayName}</h3>
                     <div
                       className={cn(
-                        "p-2 rounded-xl ring-2 transition-all duration-300",
+                        "p-2 rounded-xl ring-2 transition-all duration-300 flex-shrink-0",
                         isPopular
                           ? "bg-gradient-to-br from-neutral-600 to-neutral-700 ring-neutral-500"
-                          : "bg-gradient-to-br from-primary/20 to-primary/5 ring-primary/10"
+                          : "bg-gradient-to-br from-primary/20 to-primary/5 ring-primary/10 dark:from-primary/30 dark:to-primary/10"
                       )}
                     >
-                      <ServiceIcon className={cn("h-6 w-6", isPopular ? "text-white" : "text-primary")} />
+                      <ServiceIcon className={cn("h-5 w-5 md:h-6 md:w-6", isPopular ? "text-white" : "text-primary")} />
                     </div>
                   </div>
                   <p
                     className={
                       isPopular
                         ? "text-sm text-neutral-200 mb-4"
-                        : "text-sm text-gray-600 mb-4"
+                        : "text-sm text-muted-foreground mb-4"
                     }
                   >
                     {shortDescription}
                   </p>
 
-                  <div className="space-y-3 pt-4 border-t border-neutral-200">
-                    <h4 className="font-medium text-base mb-3">
+                  <div className="space-y-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
+                    <h4 className={cn(
+                      "font-medium text-base mb-3",
+                      isPopular ? "text-white" : "text-foreground"
+                    )}>
                       Incluye:
                     </h4>
                     <ul className="space-y-2 font-semibold">
@@ -379,8 +385,8 @@ export default function PrecaPricingSection() {
                           <span
                             className={
                               isPopular
-                                ? "text-white h-6 w-6 bg-neutral-600 border border-neutral-500 rounded-full grid place-content-center mt-0.5 mr-3"
-                                : "text-black h-6 w-6 bg-white border border-black rounded-full grid place-content-center mt-0.5 mr-3"
+                                ? "text-white h-6 w-6 bg-neutral-600 border border-neutral-500 rounded-full grid place-content-center mt-0.5 mr-3 flex-shrink-0"
+                                : "text-primary h-6 w-6 bg-primary/10 dark:bg-primary/20 border border-primary/30 dark:border-primary/40 rounded-full grid place-content-center mt-0.5 mr-3 flex-shrink-0"
                             }
                           >
                             <CheckCheck className="h-4 w-4" />
@@ -389,7 +395,7 @@ export default function PrecaPricingSection() {
                             className={
                               isPopular
                                 ? "text-sm text-neutral-100"
-                                : "text-sm text-gray-600"
+                                : "text-sm text-muted-foreground"
                             }
                           >
                             {feature}
@@ -401,10 +407,10 @@ export default function PrecaPricingSection() {
                 </CardContent>
                 <CardFooter>
                   <button
-                    className={`w-full mb-6 p-4 text-xl rounded-xl ${
+                    className={`w-full mb-6 p-3 md:p-4 text-lg md:text-xl rounded-xl transition-all ${
                       isPopular
-                        ? "bg-gradient-to-t from-neutral-100 to-neutral-300 font-semibold shadow-lg shadow-neutral-500 border border-neutral-400 text-black"
-                        : "bg-gradient-to-t from-neutral-900 to-neutral-600 shadow-lg shadow-neutral-900 border border-neutral-700 text-white"
+                        ? "bg-gradient-to-t from-neutral-100 to-neutral-300 font-semibold shadow-lg shadow-neutral-500 border border-neutral-400 text-black hover:from-neutral-200 hover:to-neutral-400"
+                        : "bg-gradient-to-t from-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 shadow-lg shadow-primary/30 dark:shadow-primary/20 border border-primary/40 dark:border-primary/50 text-white hover:from-primary/90 hover:to-primary/70"
                     }`}
                   >
                     Seleccionar
