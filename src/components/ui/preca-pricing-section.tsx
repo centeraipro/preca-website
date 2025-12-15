@@ -9,7 +9,14 @@ import { motion } from "motion/react";
 import { useRef, useState, useMemo } from "react";
 import { useServices } from "@/hooks/use-services";
 import type { Service } from "@/types/service";
-import { ServiceTypeDialog, type GroupedService } from "@/components/ServiceTypeDialog";
+import { useNavigate } from "react-router-dom";
+
+interface GroupedService {
+  baseName: string;
+  displayName: string;
+  fisica: Service | undefined;
+  moral: Service | undefined;
+}
 
 // Extract base name by removing FISICA/MORAL suffix
 const getBaseName = (name: string): string => {
@@ -155,8 +162,7 @@ export default function PrecaPricingSection() {
   const [personType, setPersonType] = useState<"fisica" | "moral">("fisica");
   const pricingRef = useRef<HTMLDivElement>(null);
   const { data: services, isLoading, error } = useServices();
-  const [selectedGroup, setSelectedGroup] = useState<GroupedService | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   const groupedServices = useMemo(() => {
     if (!services) return [];
@@ -184,8 +190,10 @@ export default function PrecaPricingSection() {
     setPersonType(Number.parseInt(value) === 0 ? "fisica" : "moral");
 
   const handleCardClick = (group: GroupedService) => {
-    setSelectedGroup(group);
-    setDialogOpen(true);
+    const selectedService = personType === "fisica" ? group.fisica : group.moral;
+    if (selectedService) {
+      navigate(`/servicio/${selectedService.id}`);
+    }
   };
 
   // Sort services to put PRECA COMPLETA first
@@ -219,12 +227,12 @@ export default function PrecaPricingSection() {
 
   return (
     <div
-      className="px-4 pt-20 min-h-screen max-w-7xl mx-auto relative"
+      className="px-4 py-8 min-h-screen max-w-7xl mx-auto relative flex flex-col justify-center"
       ref={pricingRef}
     >
-      <article className="flex sm:flex-row flex-col sm:pb-0 pb-4 sm:items-center items-start justify-between">
-        <div className="text-left mb-6">
-          <h2 className="text-4xl font-medium leading-[130%] text-gray-900 mb-4">
+      <article className="flex sm:flex-row flex-col sm:pb-0 pb-4 sm:items-center items-start justify-between mb-4">
+        <div className="text-left mb-4">
+          <h2 className="text-4xl font-medium leading-[130%] text-foreground mb-4">
             <VerticalCutReveal
               splitBy="words"
               staggerDuration={0.15}
@@ -247,7 +255,7 @@ export default function PrecaPricingSection() {
             animationNum={0}
             timelineRef={pricingRef}
             customVariants={revealVariants}
-            className="text-gray-600 w-[80%]"
+            className="text-muted-foreground w-[80%]"
           >
             Soluciones profesionales adaptadas a cada necesidad. Selecciona el tipo de persona para ver precios.
           </TimelineContent>
@@ -268,7 +276,7 @@ export default function PrecaPricingSection() {
         animationNum={2}
         timelineRef={pricingRef}
         customVariants={revealVariants}
-        className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto bg-gradient-to-b from-neutral-100 to-neutral-200 sm:p-3 rounded-lg"
+        className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto bg-gradient-to-b from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 sm:p-3 rounded-lg"
       >
         {sortedServices.map((group, index) => {
           const ServiceIcon = getServiceIcon(group.baseName);
@@ -286,14 +294,25 @@ export default function PrecaPricingSection() {
               timelineRef={pricingRef}
               customVariants={revealVariants}
             >
-              <Card
-                className={`relative flex-col flex justify-between cursor-pointer ${
-                  isPopular
-                    ? "scale-110 ring-2 ring-neutral-900 bg-gradient-to-t from-black to-neutral-900 text-white"
-                    : "border-none shadow-none bg-transparent pt-4 text-gray-900"
-                }`}
-                onClick={() => handleCardClick(group)}
+              <motion.div
+                whileHover={{
+                  scale: isPopular ? 1.12 : 1.05,
+                  y: -8,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 20
+                }}
               >
+                <Card
+                  className={`relative flex-col flex justify-between cursor-pointer transition-all duration-300 ${
+                    isPopular
+                      ? "scale-110 ring-2 ring-neutral-900 dark:ring-neutral-700 bg-gradient-to-t from-black to-neutral-900 text-white hover:shadow-2xl hover:shadow-neutral-900/50"
+                      : "border-none shadow-none bg-transparent pt-4 text-foreground hover:shadow-xl hover:shadow-neutral-500/20 dark:hover:shadow-neutral-700/30"
+                  }`}
+                  onClick={() => handleCardClick(group)}
+                >
                 <CardContent className="pt-0">
                   <div className="space-y-2 pb-3">
                     {isPopular && (
@@ -392,17 +411,11 @@ export default function PrecaPricingSection() {
                   </button>
                 </CardFooter>
               </Card>
+              </motion.div>
             </TimelineContent>
           );
         })}
       </TimelineContent>
-
-      {/* Service Type Selection Dialog */}
-      <ServiceTypeDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        groupedService={selectedGroup}
-      />
     </div>
   );
 }
