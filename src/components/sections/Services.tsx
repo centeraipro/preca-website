@@ -1,10 +1,11 @@
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileCheck, Shield, Star, Building2, Globe, Loader2, AlertCircle } from "lucide-react";
+import { FileCheck, Shield, Star, Building2, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import { useServices } from "@/hooks/use-services";
 import type { Service } from "@/types/service";
+import { ServiceTypeDialog, type GroupedService } from "@/components/ServiceTypeDialog";
 
 // Map service names to icons
 const getServiceIcon = (name: string) => {
@@ -13,13 +14,12 @@ const getServiceIcon = (name: string) => {
   if (nameLower.includes("basica") || nameLower.includes("básica")) return Shield;
   if (nameLower.includes("pro")) return Star;
   if (nameLower.includes("completa")) return Building2;
-  if (nameLower.includes("extranjero")) return Globe;
   return Shield;
 };
 
 // Get short features from description
-const getFeatures = (service: Service): string[] => {
-  const nameLower = service.name.toLowerCase();
+const getFeatures = (baseName: string): string[] => {
+  const nameLower = baseName.toLowerCase();
   
   if (nameLower.includes("ine")) {
     return ["Validación de identidad", "Proceso rápido", "Sin participación del evaluado"];
@@ -37,8 +37,8 @@ const getFeatures = (service: Service): string[] => {
 };
 
 // Get short description for card
-const getShortDescription = (service: Service): string => {
-  const nameLower = service.name.toLowerCase();
+const getShortDescription = (baseName: string): string => {
+  const nameLower = baseName.toLowerCase();
   
   if (nameLower.includes("ine")) {
     return "Verificación básica de identidad con credencial INE o cédula RFC.";
@@ -52,15 +52,67 @@ const getShortDescription = (service: Service): string => {
   if (nameLower.includes("completa")) {
     return "Servicio integral con visita física y estudio socioeconómico.";
   }
-  return service.description.slice(0, 100) + "...";
+  return "Servicio de precalificación profesional.";
+};
+
+// Extract base name by removing FISICA/MORAL suffix
+const getBaseName = (name: string): string => {
+  return name.replace(/\s*(FISICA|MORAL)\s*$/i, "").trim();
+};
+
+// Group services by base name
+const groupServices = (services: Service[]): GroupedService[] => {
+  const groups: Record<string, GroupedService> = {};
+
+  services.forEach((service) => {
+    const baseName = getBaseName(service.name);
+    const nameLower = service.name.toLowerCase();
+    const isMoral = nameLower.includes("moral");
+
+    if (!groups[baseName]) {
+      groups[baseName] = {
+        baseName,
+        displayName: baseName,
+        fisica: undefined,
+        moral: undefined,
+      };
+    }
+
+    if (isMoral) {
+      groups[baseName].moral = service;
+    } else {
+      groups[baseName].fisica = service;
+    }
+  });
+
+  return Object.values(groups);
+};
+
+// Get price range display
+const getPriceRange = (group: GroupedService): string => {
+  const prices: number[] = [];
+  if (group.fisica) prices.push(group.fisica.priceMxn);
+  if (group.moral) prices.push(group.moral.priceMxn);
+  
+  if (prices.length === 0) return "";
+  
+  const minPrice = Math.min(...prices);
+  return `Desde $${minPrice.toLocaleString("es-MX")}.00 MXN`;
 };
 
 export function Services() {
   const { data: services, isLoading, error } = useServices();
-  const navigate = useNavigate();
+  const [selectedGroup, setSelectedGroup] = useState<GroupedService | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleServiceClick = (service: Service) => {
-    navigate(`/servicio/${service.id}`);
+  const groupedServices = useMemo(() => {
+    if (!services) return [];
+    return groupServices(services);
+  }, [services]);
+
+  const handleCardClick = (group: GroupedService) => {
+    setSelectedGroup(group);
+    setDialogOpen(true);
   };
 
   return (
@@ -122,18 +174,20 @@ export function Services() {
           </div>
         )}
 
-        {/* Services Grid */}
-        {services && services.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {services.map((service, index) => {
-              const ServiceIcon = getServiceIcon(service.name);
-              const features = getFeatures(service);
-              const shortDescription = getShortDescription(service);
-              const isFileService = service.formSchema.fields.some(f => f.type === "file");
+        {/* Services Grid - Now showing 4 grouped cards */}
+        {groupedServices.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {groupedServices.map((group, index) => {
+              const ServiceIcon = getServiceIcon(group.baseName);
+              const features = getFeatures(group.baseName);
+              const shortDescription = getShortDescription(group.baseName);
+              const priceRange = getPriceRange(group);
+              const sampleService = group.fisica || group.moral;
+              const isFileService = sampleService?.formSchema.fields.some(f => f.type === "file");
 
               return (
                 <motion.div
-                  key={service.id}
+                  key={group.baseName}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
@@ -143,7 +197,10 @@ export function Services() {
                     ease: "easeOut"
                   }}
                 >
-                  <Card className="h-full group relative overflow-hidden border-2 hover:border-primary/30 transition-all duration-500 flex flex-col bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:scale-[1.02]">
+                  <Card 
+                    className="h-full group relative overflow-hidden border-2 hover:border-primary/30 transition-all duration-500 flex flex-col bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:scale-[1.02] cursor-pointer"
+                    onClick={() => handleCardClick(group)}
+                  >
                     {/* Gradient overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -156,11 +213,11 @@ export function Services() {
                           <ServiceIcon className="h-7 w-7 text-primary" />
                         </motion.div>
                         <div className="text-right">
-                          <span className="text-lg font-bold text-primary">{service.formattedPrice}</span>
+                          <span className="text-sm font-bold text-primary">{priceRange}</span>
                         </div>
                       </div>
                       <CardTitle className="text-lg mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                        {service.name}
+                        {group.displayName}
                       </CardTitle>
                       <CardDescription className="text-sm leading-relaxed line-clamp-3">
                         {shortDescription}
@@ -185,11 +242,8 @@ export function Services() {
                       <Button
                         variant="outline"
                         className="w-full group/btn relative overflow-hidden border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                        onClick={() => handleServiceClick(service)}
                       >
-                        <span className="relative z-10">
-                          {isFileService ? "Solicitar por WhatsApp" : "Solicitar servicio"}
-                        </span>
+                        <span className="relative z-10">Seleccionar</span>
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                       </Button>
                     </CardContent>
@@ -200,6 +254,13 @@ export function Services() {
           </div>
         )}
       </div>
+
+      {/* Service Type Selection Dialog */}
+      <ServiceTypeDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        groupedService={selectedGroup}
+      />
     </section>
   );
 }
