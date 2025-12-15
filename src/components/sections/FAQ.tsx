@@ -42,17 +42,17 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
+    <section id="faq" className="min-h-screen py-12 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden flex flex-col justify-center">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 60 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-20"
+          className="text-center mb-10"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}

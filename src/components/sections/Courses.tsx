@@ -63,7 +63,7 @@ export function Courses() {
   };
 
   return (
-    <section id="courses" className="py-20 md:py-32 bg-gradient-to-b from-muted/30 to-muted/60 relative overflow-hidden">
+    <section id="courses" className="min-h-screen py-12 bg-gradient-to-b from-muted/30 to-muted/60 relative overflow-hidden flex flex-col justify-center">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
@@ -73,7 +73,7 @@ export function Courses() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
-          className="text-center mb-20"
+          className="text-center mb-10"
         >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
