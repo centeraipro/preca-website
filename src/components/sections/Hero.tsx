@@ -4,10 +4,10 @@ import { CheckCircle2 } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden pt-16">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-light to-background -z-10" />
       
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto text-center">
       <motion.div
         initial={{ opacity: 0, x: -60 }}
