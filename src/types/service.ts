@@ -27,6 +27,9 @@ export interface ScreeningRequest {
   applicantName: string;
   applicantEmail: string;
   applicantPhone: string;
+  advisorId?: string;
+  advisorName?: string;
+  advisorPhone?: string;
   formData: Record<string, string | boolean>;
 }
 
