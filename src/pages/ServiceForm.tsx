@@ -302,7 +302,7 @@ export default function ServiceForm() {
                       <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">Opcional</span>
                     </div>
                     <p className="text-sm text-muted-foreground -mt-2">
-                      Si conoces el ID del asesor, ingrésalo directamente. Si no, puedes proporcionar su nombre o teléfono.
+                      Si conoces la clave del asesor, ingrésala directamente. Si no, puedes proporcionar su nombre o teléfono.
                     </p>
                     
                     <div className="grid gap-4">
