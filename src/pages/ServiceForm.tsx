@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Loader2, AlertCircle, MessageCircle, CheckCircle } from "lucide-react";
+import { ArrowLeft, Loader2, AlertCircle, MessageCircle, CheckCircle, User, Hash, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { useServices } from "@/hooks/use-services";
 import { createScreening } from "@/lib/screening-api";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import type { Service, FormField } from "@/types/service";
+import type { FormField } from "@/types/service";
 
 export default function ServiceForm() {
   const { serviceId } = useParams<{ serviceId: string }>();
@@ -22,6 +22,9 @@ export default function ServiceForm() {
   const [applicantName, setApplicantName] = useState("");
   const [applicantEmail, setApplicantEmail] = useState("");
   const [applicantPhone, setApplicantPhone] = useState("");
+  const [advisorId, setAdvisorId] = useState("");
+  const [advisorName, setAdvisorName] = useState("");
+  const [advisorPhone, setAdvisorPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Scroll to top when page loads
@@ -77,6 +80,9 @@ export default function ServiceForm() {
         applicantName,
         applicantEmail,
         applicantPhone,
+        ...(advisorId && { advisorId }),
+        ...(advisorName && { advisorName }),
+        ...(advisorPhone && { advisorPhone }),
         formData,
       });
 
@@ -286,6 +292,81 @@ export default function ServiceForm() {
                         placeholder="tu@email.com"
                         required
                       />
+                    </div>
+                  </div>
+
+                  {/* Advisor Information */}
+                  <div className="space-y-4 pb-6 border-b">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold text-lg">Información del asesor</h3>
+                      <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">Opcional</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground -mt-2">
+                      Si conoces el ID del asesor, ingrésalo directamente. Si no, puedes proporcionar su nombre o teléfono.
+                    </p>
+                    
+                    <div className="grid gap-4">
+                      {/* Advisor ID - Primary option */}
+                      <div className="space-y-2">
+                        <Label htmlFor="advisorId" className="flex items-center gap-2">
+                          <Hash className="h-4 w-4 text-primary" />
+                          ID del asesor
+                        </Label>
+                        <Input
+                          id="advisorId"
+                          value={advisorId}
+                          onChange={(e) => setAdvisorId(e.target.value)}
+                          placeholder="Ej: 123"
+                          className={advisorId ? "border-primary/50 bg-primary/5" : ""}
+                        />
+                        {advisorId && (
+                          <p className="text-xs text-primary flex items-center gap-1">
+                            <CheckCircle className="h-3 w-3" />
+                            Con el ID del asesor es suficiente
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Divider with "or" */}
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <div className="w-full border-t border-dashed" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-card px-2 text-muted-foreground">o proporciona</span>
+                        </div>
+                      </div>
+
+                      {/* Name and Phone - Alternative options */}
+                      <div className={`grid gap-4 sm:grid-cols-2 transition-opacity duration-200 ${advisorId ? "opacity-50" : ""}`}>
+                        <div className="space-y-2">
+                          <Label htmlFor="advisorName" className="flex items-center gap-2">
+                            <User className="h-4 w-4 text-muted-foreground" />
+                            Nombre del asesor
+                          </Label>
+                          <Input
+                            id="advisorName"
+                            value={advisorName}
+                            onChange={(e) => setAdvisorName(e.target.value)}
+                            placeholder="Nombre completo"
+                            disabled={!!advisorId}
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="advisorPhone" className="flex items-center gap-2">
+                            <Phone className="h-4 w-4 text-muted-foreground" />
+                            Teléfono del asesor
+                          </Label>
+                          <Input
+                            id="advisorPhone"
+                            type="tel"
+                            value={advisorPhone}
+                            onChange={(e) => setAdvisorPhone(e.target.value)}
+                            placeholder="+52 55 9876 5432"
+                            disabled={!!advisorId}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
 
