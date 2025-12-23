@@ -310,7 +310,7 @@ export default function ServiceForm() {
                       <div className="space-y-2">
                         <Label htmlFor="advisorId" className="flex items-center gap-2">
                           <Hash className="h-4 w-4 text-primary" />
-                          ID del asesor
+                          Clave de asesor
                         </Label>
                         <Input
                           id="advisorId"
