@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Service } from "@/types/service";
 
-const SERVICES_API_URL = "https://preca.admin.botia.pro/api/public/services";
+const SERVICES_API_URL = "https://preca.admin.centerai.cloud/api/public/services";
 
 export function useServices() {
   return useQuery<Service[]>({
