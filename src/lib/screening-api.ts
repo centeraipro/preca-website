@@ -1,6 +1,6 @@
 import type { ScreeningRequest, ScreeningResponse } from "@/types/service";
 
-const SCREENING_API_URL = "https://preca.admin.botia.pro/api/public/screenings";
+const SCREENING_API_URL = "https://preca.admin.centerai.cloud/api/public/screenings";
 
 export async function createScreening(data: ScreeningRequest): Promise<ScreeningResponse> {
   const response = await fetch(SCREENING_API_URL, {
