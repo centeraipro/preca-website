@@ -6,17 +6,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useServices } from "@/hooks/use-services";
-import { createScreening } from "@/lib/screening-api";
-import { useState, useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { createScreening, type ApiError } from "@/lib/screening-api";
+import { useState, useEffect, useRef } from "react";
 import type { FormField } from "@/types/service";
 
 export default function ServiceForm() {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { data: services, isLoading, error } = useServices();
+  const errorRef = useRef<HTMLDivElement>(null);
   
   const [formData, setFormData] = useState<Record<string, string | boolean>>({});
   const [applicantName, setApplicantName] = useState("");
@@ -25,6 +25,8 @@ export default function ServiceForm() {
   const [advisorId, setAdvisorId] = useState("");
   const [advisorName, setAdvisorName] = useState("");
   const [advisorPhone, setAdvisorPhone] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Scroll to top when page loads
@@ -37,6 +39,26 @@ export default function ServiceForm() {
 
   const handleFieldChange = (fieldName: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
+    // Clear field error when user starts typing
+    if (fieldErrors[fieldName]) {
+      setFieldErrors(prev => {
+        const next = { ...prev };
+        delete next[fieldName];
+        return next;
+      });
+    }
+    setApiError(null);
+  };
+
+  const clearFieldError = (fieldName: string) => {
+    if (fieldErrors[fieldName]) {
+      setFieldErrors(prev => {
+        const next = { ...prev };
+        delete next[fieldName];
+        return next;
+      });
+    }
+    setApiError(null);
   };
 
   const handleWhatsAppRedirect = () => {
@@ -51,25 +73,29 @@ export default function ServiceForm() {
     
     if (!service) return;
 
-    if (!applicantName || !applicantEmail || !applicantPhone) {
-      toast({
-        title: "Campos requeridos",
-        description: "Por favor complete su nombre, correo y teléfono.",
-        variant: "destructive",
-      });
-      return;
-    }
+    // Clear previous errors
+    setFieldErrors({});
+    setApiError(null);
+
+    // Validate required fields
+    const errors: Record<string, string> = {};
+    
+    if (!applicantName.trim()) errors.applicantName = "El nombre es requerido";
+    if (!applicantEmail.trim()) errors.applicantEmail = "El correo es requerido";
+    if (!applicantPhone.trim()) errors.applicantPhone = "El teléfono es requerido";
 
     const requiredFields = service.formSchema.fields.filter(f => f.required);
     for (const field of requiredFields) {
       if (!formData[field.name]) {
-        toast({
-          title: "Campo requerido",
-          description: `Por favor complete: ${field.label}`,
-          variant: "destructive",
-        });
-        return;
+        errors[field.name] = `${field.label} es requerido`;
       }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setApiError("Por favor complete todos los campos requeridos.");
+      errorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
     }
 
     setIsSubmitting(true);
@@ -97,11 +123,27 @@ export default function ServiceForm() {
         },
       });
     } catch (err) {
-      toast({
-        title: "Error",
-        description: "Hubo un error al procesar su solicitud. Intente nuevamente.",
-        variant: "destructive",
-      });
+      const apiErr = err as ApiError;
+      const errorMessage = apiErr.error || "Hubo un error al procesar su solicitud. Intente nuevamente.";
+      
+      // Try to detect which field the error is about
+      const errorLower = errorMessage.toLowerCase();
+      if (errorLower.includes("advisor phone") || errorLower.includes("teléfono del asesor")) {
+        setFieldErrors({ advisorPhone: errorMessage });
+      } else if (errorLower.includes("advisor name") || errorLower.includes("nombre del asesor")) {
+        setFieldErrors({ advisorName: errorMessage });
+      } else if (errorLower.includes("advisor") || errorLower.includes("asesor")) {
+        setFieldErrors({ advisorId: errorMessage });
+      } else if (errorLower.includes("phone") || errorLower.includes("teléfono")) {
+        setFieldErrors({ applicantPhone: errorMessage });
+      } else if (errorLower.includes("email") || errorLower.includes("correo")) {
+        setFieldErrors({ applicantEmail: errorMessage });
+      } else if (errorLower.includes("name") || errorLower.includes("nombre")) {
+        setFieldErrors({ applicantName: errorMessage });
+      }
+      
+      setApiError(errorMessage);
+      errorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     } finally {
       setIsSubmitting(false);
     }
@@ -151,8 +193,13 @@ export default function ServiceForm() {
           placeholder={field.placeholder || ""}
           value={(formData[field.name] as string) || ""}
           onChange={(e) => handleFieldChange(field.name, e.target.value)}
-          className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+          className={`transition-all duration-200 focus:ring-2 focus:ring-primary/20 ${
+            fieldErrors[field.name] ? "border-destructive ring-2 ring-destructive/20" : ""
+          }`}
         />
+        {fieldErrors[field.name] && (
+          <p className="text-xs text-destructive">{fieldErrors[field.name]}</p>
+        )}
       </motion.div>
     );
   };
@@ -258,6 +305,20 @@ export default function ServiceForm() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Error Alert */}
+                  {apiError && (
+                    <motion.div
+                      ref={errorRef}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>{apiError}</AlertDescription>
+                      </Alert>
+                    </motion.div>
+                  )}
+
                   {/* Contact Information */}
                   <div className="space-y-4 pb-6 border-b">
                     <h3 className="font-semibold text-lg">Información de contacto</h3>
@@ -268,10 +329,16 @@ export default function ServiceForm() {
                         <Input
                           id="applicantName"
                           value={applicantName}
-                          onChange={(e) => setApplicantName(e.target.value)}
+                          onChange={(e) => {
+                            setApplicantName(e.target.value);
+                            clearFieldError("applicantName");
+                          }}
                           placeholder="Tu nombre completo"
-                          required
+                          className={fieldErrors.applicantName ? "border-destructive ring-2 ring-destructive/20" : ""}
                         />
+                        {fieldErrors.applicantName && (
+                          <p className="text-xs text-destructive">{fieldErrors.applicantName}</p>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="applicantPhone">Teléfono *</Label>
@@ -279,10 +346,16 @@ export default function ServiceForm() {
                           id="applicantPhone"
                           type="tel"
                           value={applicantPhone}
-                          onChange={(e) => setApplicantPhone(e.target.value)}
+                          onChange={(e) => {
+                            setApplicantPhone(e.target.value);
+                            clearFieldError("applicantPhone");
+                          }}
                           placeholder="+52 55 1234 5678"
-                          required
+                          className={fieldErrors.applicantPhone ? "border-destructive ring-2 ring-destructive/20" : ""}
                         />
+                        {fieldErrors.applicantPhone && (
+                          <p className="text-xs text-destructive">{fieldErrors.applicantPhone}</p>
+                        )}
                       </div>
                     </div>
                     
@@ -292,10 +365,16 @@ export default function ServiceForm() {
                         id="applicantEmail"
                         type="email"
                         value={applicantEmail}
-                        onChange={(e) => setApplicantEmail(e.target.value)}
+                        onChange={(e) => {
+                          setApplicantEmail(e.target.value);
+                          clearFieldError("applicantEmail");
+                        }}
                         placeholder="tu@email.com"
-                        required
+                        className={fieldErrors.applicantEmail ? "border-destructive ring-2 ring-destructive/20" : ""}
                       />
+                      {fieldErrors.applicantEmail && (
+                        <p className="text-xs text-destructive">{fieldErrors.applicantEmail}</p>
+                      )}
                     </div>
                   </div>
 
@@ -319,11 +398,19 @@ export default function ServiceForm() {
                         <Input
                           id="advisorId"
                           value={advisorId}
-                          onChange={(e) => setAdvisorId(e.target.value)}
+                          onChange={(e) => {
+                            setAdvisorId(e.target.value);
+                            clearFieldError("advisorId");
+                          }}
                           placeholder="Ej: 123"
-                          className={advisorId ? "border-primary/50 bg-primary/5" : ""}
+                          className={fieldErrors.advisorId 
+                            ? "border-destructive ring-2 ring-destructive/20" 
+                            : advisorId ? "border-primary/50 bg-primary/5" : ""}
                         />
-                        {advisorId && (
+                        {fieldErrors.advisorId && (
+                          <p className="text-xs text-destructive">{fieldErrors.advisorId}</p>
+                        )}
+                        {advisorId && !fieldErrors.advisorId && (
                           <p className="text-xs text-primary flex items-center gap-1">
                             <CheckCircle className="h-3 w-3" />
                             Con el ID del asesor es suficiente
@@ -351,10 +438,17 @@ export default function ServiceForm() {
                           <Input
                             id="advisorName"
                             value={advisorName}
-                            onChange={(e) => setAdvisorName(e.target.value)}
+                            onChange={(e) => {
+                              setAdvisorName(e.target.value);
+                              clearFieldError("advisorName");
+                            }}
                             placeholder="Nombre completo"
                             disabled={!!advisorId}
+                            className={fieldErrors.advisorName ? "border-destructive ring-2 ring-destructive/20" : ""}
                           />
+                          {fieldErrors.advisorName && (
+                            <p className="text-xs text-destructive">{fieldErrors.advisorName}</p>
+                          )}
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="advisorPhone" className="flex items-center gap-2">
@@ -365,10 +459,17 @@ export default function ServiceForm() {
                             id="advisorPhone"
                             type="tel"
                             value={advisorPhone}
-                            onChange={(e) => setAdvisorPhone(e.target.value)}
+                            onChange={(e) => {
+                              setAdvisorPhone(e.target.value);
+                              clearFieldError("advisorPhone");
+                            }}
                             placeholder="+52 55 9876 5432"
                             disabled={!!advisorId}
+                            className={fieldErrors.advisorPhone ? "border-destructive ring-2 ring-destructive/20" : ""}
                           />
+                          {fieldErrors.advisorPhone && (
+                            <p className="text-xs text-destructive">{fieldErrors.advisorPhone}</p>
+                          )}
                         </div>
                       </div>
                     </div>
