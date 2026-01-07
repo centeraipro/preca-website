@@ -12,6 +12,38 @@ import { createScreening, type ApiError } from "@/lib/screening-api";
 import { useState, useEffect, useRef } from "react";
 import type { FormField } from "@/types/service";
 
+// Translate common API error messages to Spanish
+const translateError = (error: string): string => {
+  const translations: Record<string, string> = {
+    "Advisor phone must be at least 10 characters": "El teléfono del asesor debe tener al menos 10 caracteres",
+    "Advisor name must be at least 2 characters": "El nombre del asesor debe tener al menos 2 caracteres",
+    "Advisor ID is invalid": "La clave del asesor no es válida",
+    "Phone must be at least 10 characters": "El teléfono debe tener al menos 10 caracteres",
+    "Email is invalid": "El correo electrónico no es válido",
+    "Name must be at least 2 characters": "El nombre debe tener al menos 2 caracteres",
+    "Service not found": "Servicio no encontrado",
+    "Invalid request": "Solicitud inválida",
+  };
+
+  // Check for exact match
+  if (translations[error]) return translations[error];
+
+  // Check for partial matches
+  const lowerError = error.toLowerCase();
+  if (lowerError.includes("phone") && lowerError.includes("10")) 
+    return "El teléfono debe tener al menos 10 caracteres";
+  if (lowerError.includes("advisor phone")) 
+    return "El teléfono del asesor debe tener al menos 10 caracteres";
+  if (lowerError.includes("email") && lowerError.includes("invalid")) 
+    return "El correo electrónico no es válido";
+  if (lowerError.includes("required")) 
+    return "Este campo es requerido";
+  if (lowerError.includes("invalid")) 
+    return "El valor ingresado no es válido";
+
+  return error; // Return original if no translation found
+};
+
 export default function ServiceForm() {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
@@ -124,7 +156,7 @@ export default function ServiceForm() {
       });
     } catch (err) {
       const apiErr = err as ApiError;
-      const errorMessage = apiErr.error || "Hubo un error al procesar su solicitud. Intente nuevamente.";
+      const errorMessage = translateError(apiErr.error || "Hubo un error al procesar su solicitud. Intente nuevamente.");
       
       // Try to detect which field the error is about
       const errorLower = errorMessage.toLowerCase();
