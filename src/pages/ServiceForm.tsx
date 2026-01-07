@@ -86,12 +86,16 @@ export default function ServiceForm() {
         formData,
       });
 
-      toast({
-        title: "¡Solicitud enviada!",
-        description: "Será redirigido al portal de pago.",
-      });
-
+      // Open payment link in new tab
       window.open(result.paymentLinkUrl, "_blank");
+
+      // Navigate to pending page with service info
+      navigate("/pago-pendiente", {
+        state: {
+          serviceName: service.name,
+          applicantEmail,
+        },
+      });
     } catch (err) {
       toast({
         title: "Error",
