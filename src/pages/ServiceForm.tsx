@@ -57,6 +57,14 @@ export default function ServiceForm() {
   const [advisorId, setAdvisorId] = useState("");
   const [advisorName, setAdvisorName] = useState("");
   const [advisorPhone, setAdvisorPhone] = useState("");
+  // Applicant details fields (for billing/fiscal info)
+  const [applicantRFC, setApplicantRFC] = useState("");
+  const [applicantStreet, setApplicantStreet] = useState("");
+  const [applicantColony, setApplicantColony] = useState("");
+  const [applicantMunicipality, setApplicantMunicipality] = useState("");
+  const [applicantState, setApplicantState] = useState("");
+  const [applicantZipCode, setApplicantZipCode] = useState("");
+  const [applicantLegalRepresentative, setApplicantLegalRepresentative] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,6 +124,20 @@ export default function ServiceForm() {
     if (!applicantEmail.trim()) errors.applicantEmail = "El correo es requerido";
     if (!applicantPhone.trim()) errors.applicantPhone = "El teléfono es requerido";
 
+    // Validate applicant details if required
+    if (service.requiresApplicantDetails) {
+      if (!applicantRFC.trim()) errors.applicantRFC = "El RFC es requerido";
+      if (!applicantStreet.trim()) errors.applicantStreet = "La calle es requerida";
+      if (!applicantColony.trim()) errors.applicantColony = "La colonia es requerida";
+      if (!applicantMunicipality.trim()) errors.applicantMunicipality = "El municipio es requerido";
+      if (!applicantState.trim()) errors.applicantState = "El estado es requerido";
+      if (!applicantZipCode.trim()) errors.applicantZipCode = "El código postal es requerido";
+      // Legal representative only required for "moral" person type
+      if (service.targetPersonType === "moral" && !applicantLegalRepresentative.trim()) {
+        errors.applicantLegalRepresentative = "El representante legal es requerido";
+      }
+    }
+
     const requiredFields = service.formSchema.fields.filter(f => f.required);
     for (const field of requiredFields) {
       if (!formData[field.name]) {
@@ -132,17 +154,35 @@ export default function ServiceForm() {
 
     setIsSubmitting(true);
 
+    // Build request with applicant details if required
+    const requestData: Parameters<typeof createScreening>[0] = {
+      serviceId: service.id.toString(),
+      applicantName,
+      applicantEmail,
+      applicantPhone,
+      ...(advisorId && { advisorId }),
+      ...(advisorName && { advisorName }),
+      ...(advisorPhone && { advisorPhone }),
+      formData,
+    };
+
+    // Add applicant details if required
+    if (service.requiresApplicantDetails) {
+      requestData.applicantPersonType = service.targetPersonType || "physical";
+      requestData.applicantRFC = applicantRFC;
+      requestData.applicantStreet = applicantStreet;
+      requestData.applicantColony = applicantColony;
+      requestData.applicantMunicipality = applicantMunicipality;
+      requestData.applicantState = applicantState;
+      requestData.applicantZipCode = applicantZipCode;
+      // Only include legal representative for "moral" type
+      if (service.targetPersonType === "moral") {
+        requestData.applicantLegalRepresentative = applicantLegalRepresentative;
+      }
+    }
+
     try {
-      const result = await createScreening({
-        serviceId: service.id.toString(),
-        applicantName,
-        applicantEmail,
-        applicantPhone,
-        ...(advisorId && { advisorId }),
-        ...(advisorName && { advisorName }),
-        ...(advisorPhone && { advisorPhone }),
-        formData,
-      });
+      const result = await createScreening(requestData);
 
       // Open payment link in new tab
       window.open(result.paymentLinkUrl, "_blank");
@@ -506,6 +546,141 @@ export default function ServiceForm() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Applicant Details (Fiscal/Billing Info) - Only if requiresApplicantDetails */}
+                  {service.requiresApplicantDetails && (
+                    <div className="space-y-4 pb-6 border-b">
+                      <h3 className="font-semibold text-lg">
+                        Datos fiscales {service.targetPersonType === "moral" ? "(Persona Moral)" : "(Persona Física)"}
+                      </h3>
+                      
+                      {/* Legal Representative - only for moral */}
+                      {service.targetPersonType === "moral" && (
+                        <div className="space-y-2">
+                          <Label htmlFor="applicantLegalRepresentative">Representante legal *</Label>
+                          <Input
+                            id="applicantLegalRepresentative"
+                            value={applicantLegalRepresentative}
+                            onChange={(e) => {
+                              setApplicantLegalRepresentative(e.target.value);
+                              clearFieldError("applicantLegalRepresentative");
+                            }}
+                            placeholder="Nombre del representante legal"
+                            className={fieldErrors.applicantLegalRepresentative ? "border-destructive ring-2 ring-destructive/20" : ""}
+                          />
+                          {fieldErrors.applicantLegalRepresentative && (
+                            <p className="text-xs text-destructive">{fieldErrors.applicantLegalRepresentative}</p>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="applicantRFC">RFC *</Label>
+                          <Input
+                            id="applicantRFC"
+                            value={applicantRFC}
+                            onChange={(e) => {
+                              setApplicantRFC(e.target.value.toUpperCase());
+                              clearFieldError("applicantRFC");
+                            }}
+                            placeholder="XAXX010101000"
+                            maxLength={13}
+                            className={fieldErrors.applicantRFC ? "border-destructive ring-2 ring-destructive/20" : ""}
+                          />
+                          {fieldErrors.applicantRFC && (
+                            <p className="text-xs text-destructive">{fieldErrors.applicantRFC}</p>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="applicantZipCode">Código postal *</Label>
+                          <Input
+                            id="applicantZipCode"
+                            value={applicantZipCode}
+                            onChange={(e) => {
+                              setApplicantZipCode(e.target.value);
+                              clearFieldError("applicantZipCode");
+                            }}
+                            placeholder="12345"
+                            maxLength={5}
+                            className={fieldErrors.applicantZipCode ? "border-destructive ring-2 ring-destructive/20" : ""}
+                          />
+                          {fieldErrors.applicantZipCode && (
+                            <p className="text-xs text-destructive">{fieldErrors.applicantZipCode}</p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="applicantStreet">Calle y número *</Label>
+                        <Input
+                          id="applicantStreet"
+                          value={applicantStreet}
+                          onChange={(e) => {
+                            setApplicantStreet(e.target.value);
+                            clearFieldError("applicantStreet");
+                          }}
+                          placeholder="Av. Reforma 123"
+                          className={fieldErrors.applicantStreet ? "border-destructive ring-2 ring-destructive/20" : ""}
+                        />
+                        {fieldErrors.applicantStreet && (
+                          <p className="text-xs text-destructive">{fieldErrors.applicantStreet}</p>
+                        )}
+                      </div>
+
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="applicantColony">Colonia *</Label>
+                          <Input
+                            id="applicantColony"
+                            value={applicantColony}
+                            onChange={(e) => {
+                              setApplicantColony(e.target.value);
+                              clearFieldError("applicantColony");
+                            }}
+                            placeholder="Centro"
+                            className={fieldErrors.applicantColony ? "border-destructive ring-2 ring-destructive/20" : ""}
+                          />
+                          {fieldErrors.applicantColony && (
+                            <p className="text-xs text-destructive">{fieldErrors.applicantColony}</p>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="applicantMunicipality">Municipio/Alcaldía *</Label>
+                          <Input
+                            id="applicantMunicipality"
+                            value={applicantMunicipality}
+                            onChange={(e) => {
+                              setApplicantMunicipality(e.target.value);
+                              clearFieldError("applicantMunicipality");
+                            }}
+                            placeholder="Cuauhtémoc"
+                            className={fieldErrors.applicantMunicipality ? "border-destructive ring-2 ring-destructive/20" : ""}
+                          />
+                          {fieldErrors.applicantMunicipality && (
+                            <p className="text-xs text-destructive">{fieldErrors.applicantMunicipality}</p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="applicantState">Estado *</Label>
+                        <Input
+                          id="applicantState"
+                          value={applicantState}
+                          onChange={(e) => {
+                            setApplicantState(e.target.value);
+                            clearFieldError("applicantState");
+                          }}
+                          placeholder="Ciudad de México"
+                          className={fieldErrors.applicantState ? "border-destructive ring-2 ring-destructive/20" : ""}
+                        />
+                        {fieldErrors.applicantState && (
+                          <p className="text-xs text-destructive">{fieldErrors.applicantState}</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Dynamic Form Fields */}
                   <div className="space-y-4">
