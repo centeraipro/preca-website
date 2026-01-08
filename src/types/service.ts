@@ -20,6 +20,19 @@ export interface Service {
   priceMxn: number;
   formattedPrice: string;
   formSchema: FormSchema;
+  requiresApplicantDetails?: boolean;
+  targetPersonType?: "physical" | "moral";
+}
+
+export interface ApplicantDetails {
+  applicantPersonType: "physical" | "moral";
+  applicantLegalRepresentative?: string;
+  applicantRFC: string;
+  applicantStreet: string;
+  applicantColony: string;
+  applicantMunicipality: string;
+  applicantState: string;
+  applicantZipCode: string;
 }
 
 export interface ScreeningRequest {
@@ -31,6 +44,15 @@ export interface ScreeningRequest {
   advisorName?: string;
   advisorPhone?: string;
   formData: Record<string, string | boolean>;
+  // Applicant details fields (only when requiresApplicantDetails is true)
+  applicantPersonType?: "physical" | "moral";
+  applicantLegalRepresentative?: string;
+  applicantRFC?: string;
+  applicantStreet?: string;
+  applicantColony?: string;
+  applicantMunicipality?: string;
+  applicantState?: string;
+  applicantZipCode?: string;
 }
 
 export interface ScreeningResponse {
